@@ -4,12 +4,13 @@ analyzer:
   exclude:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
+    - "**/*.gr.dart"
   plugins:
     - custom_lint
     
 linter:
   rules:
-    # カスタムルール
+    # 基本的なルール
     prefer_single_quotes: true
     avoid_print: true
     avoid_unnecessary_containers: true
@@ -18,5 +19,14 @@ linter:
     sort_constructors_first: true
     sort_unnamed_constructors_first: true
     
-    # Riverpod関連
-    riverpod_final_provider: true
+    # Records & Patterns（Dart 3.0+）
+    prefer_expression_function_bodies: true
+    prefer_final_locals: true
+    prefer_final_fields: true
+    
+    # 開発初期段階では緩和するルール
+    public_member_api_docs: false  # ドキュメントコメント必須を無効化
+    prefer_relative_imports: false  # 相対インポート必須を無効化
+    sort_pub_dependencies: false   # pubspec.yaml依存関係ソート必須を無効化
+    directives_ordering: false     # import文ソート必須を無効化
+    eol_at_end_of_file: false     # ファイル末尾改行必須を無効化
