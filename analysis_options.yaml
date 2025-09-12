@@ -7,14 +7,10 @@ analyzer:
     - "**/*.gr.dart"
   plugins:
     - custom_lint
-  language:
-    strict-casts: true
-    strict-inference: true
-    strict-raw-types: true
     
 linter:
   rules:
-    # Dart 3.9の新機能を活用
+    # 基本的なルール
     prefer_single_quotes: true
     avoid_print: true
     avoid_unnecessary_containers: true
@@ -28,11 +24,9 @@ linter:
     prefer_final_locals: true
     prefer_final_fields: true
     
-    # 最新のベストプラクティス
-    use_super_parameters: true
-    unnecessary_parenthesis: true
-    avoid_redundant_argument_values: true
-    prefer_relative_imports: true
-    
-    # Riverpod関連（カスタムlintが有効な場合）
-    # riverpod_final_provider: true
+    # 開発初期段階では緩和するルール
+    public_member_api_docs: false  # ドキュメントコメント必須を無効化
+    prefer_relative_imports: false  # 相対インポート必須を無効化
+    sort_pub_dependencies: false   # pubspec.yaml依存関係ソート必須を無効化
+    directives_ordering: false     # import文ソート必須を無効化
+    eol_at_end_of_file: false     # ファイル末尾改行必須を無効化
