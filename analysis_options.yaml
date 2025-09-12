@@ -4,12 +4,17 @@ analyzer:
   exclude:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
+    - "**/*.gr.dart"
   plugins:
     - custom_lint
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
     
 linter:
   rules:
-    # カスタムルール
+    # Dart 3.9の新機能を活用
     prefer_single_quotes: true
     avoid_print: true
     avoid_unnecessary_containers: true
@@ -18,5 +23,16 @@ linter:
     sort_constructors_first: true
     sort_unnamed_constructors_first: true
     
-    # Riverpod関連
-    riverpod_final_provider: true
+    # Records & Patterns（Dart 3.0+）
+    prefer_expression_function_bodies: true
+    prefer_final_locals: true
+    prefer_final_fields: true
+    
+    # 最新のベストプラクティス
+    use_super_parameters: true
+    unnecessary_parenthesis: true
+    avoid_redundant_argument_values: true
+    prefer_relative_imports: true
+    
+    # Riverpod関連（カスタムlintが有効な場合）
+    # riverpod_final_provider: true

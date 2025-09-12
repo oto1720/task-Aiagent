@@ -4,45 +4,90 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.2.6  # 最新のDart SDK要件
-  flutter: ">=3.19.0"
+  sdk: ^3.9.0  # 最新Dart SDKに対応
+  flutter: ">=3.35.0"
 
 dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
   
-  # 状態管理
-  flutter_riverpod: ^2.5.1
-  riverpod_annotation: ^2.3.5
+  # 状態管理（互換版）
+  flutter_riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.0
   
-  # Firebase（段階的に追加）
-  firebase_core: ^2.24.2
-  firebase_auth: ^4.17.4
-  cloud_firestore: ^4.15.4
+  # Firebase（最新版）
+  firebase_core: ^3.6.0
+  firebase_auth: ^5.3.0
+  cloud_firestore: ^5.4.0
+  firebase_storage: ^12.3.0
+  firebase_analytics: ^11.3.0
+  cloud_functions: ^5.1.0
   
-  # UI/UX
+  # UI/UX（Flutter SDK固定版）
+  material_color_utilities: ^0.11.1
+  go_router: ^14.6.0
   
-  go_router: ^13.2.1
+  # ローカルストレージ
+  shared_preferences: ^2.3.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  
+  # HTTP通信
+  dio: ^5.7.0
   
   # 日時処理
-  intl: ^0.19.0
+  intl: ^0.20.0
+  timezone: ^0.9.4
   
-  # ユーティリティ
-  uuid: ^4.3.3
-  path_provider: ^2.1.2
+  # カレンダー連携
+  google_sign_in: ^6.2.0
+  googleapis: ^13.2.0
+  device_calendar: ^4.3.3
+  
+  # 通知
+  flutter_local_notifications: ^18.0.0
+  
+  # AI/ML
+  tflite_flutter: ^0.11.0
+  
+  # その他ユーティリティ
+  uuid: ^4.5.0
+  path_provider: ^2.1.0
+  permission_handler: ^11.3.0
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   
-  # コード生成
-  build_runner: ^2.4.8
+  # コード生成（互換版）
+  build_runner: ^2.4.13
   riverpod_generator: ^2.4.0
+  hive_generator: ^2.0.1
+  freezed: ^2.5.2
+  json_serializable: ^6.8.0
   
-  # コード品質
-  flutter_lints: ^3.0.1
-  very_good_analysis: ^5.1.0
+  # テスト
+  mockito: ^5.4.4
+  integration_test:
+    sdk: flutter
+  
+  # コード品質（最新版）
+  flutter_lints: ^5.0.0
+  very_good_analysis: ^6.0.0
 
 flutter:
   uses-material-design: true
+  
+  # アセット設定
+  # assets:
+  #   - assets/images/
+  #   - assets/icons/
+  
+  # フォント設定  
+  # fonts:
+  #   - family: NotoSansJP
+  #     fonts:
+  #       - asset: assets/fonts/NotoSansJP-Regular.ttf
