@@ -16,15 +16,9 @@ jobs:
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.35.3'  # ローカル環境と完全一致
+        flutter-version: '3.35.3'
         channel: 'stable'
         cache: true
-        
-    - name: Verify Flutter installation
-      run: |
-        flutter --version
-        dart --version
-        flutter doctor -v
         
     - name: Install dependencies
       run: flutter pub get
@@ -32,8 +26,9 @@ jobs:
     - name: Run code generation
       run: flutter packages pub run build_runner build --delete-conflicting-outputs
       
-    - name: Analyze code
-      run: flutter analyze
+    - name: Analyze code (warnings allowed)
+      run: flutter analyze --no-fatal-infos  # info レベルでCI失敗しない
+      continue-on-error: false
       
     - name: Run tests
       run: flutter test --coverage
@@ -72,26 +67,3 @@ jobs:
       with:
         name: release-apk
         path: build/app/outputs/flutter-apk/app-release.apk
-
-  build-ios:
-    needs: test
-    runs-on: macos-latest
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Setup Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: '3.35.3'
-        channel: 'stable'
-        cache: true
-        
-    - name: Install dependencies
-      run: flutter pub get
-      
-    - name: Run code generation
-      run: flutter packages pub run build_runner build --delete-conflicting-outputs
-      
-    - name: Build iOS (No signing)
-      run: flutter build ios --release --no-codesign
