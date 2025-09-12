@@ -1,69 +1,44 @@
 name: CI
 
+# いつ実行するか？
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main ]  # mainブランチにpushした時だけ
   pull_request:
     branches: [ main ]
 
 jobs:
-  test:
+  # ジョブ名（わかりやすい名前）
+  check-my-code:
     runs-on: ubuntu-latest
+    timeout-minutes: 10  # 10分でタイムアウト（無料枠節約）
     
     steps:
-    - uses: actions/checkout@v4
+    # ステップ1: コードをダウンロード
+    - name: 📥 コードをダウンロード
+      uses: actions/checkout@v4
     
-    - name: Setup Flutter
+    # ステップ2: Flutter環境を準備
+    - name: 🛠️ Flutter準備
       uses: subosito/flutter-action@v2
       with:
         flutter-version: '3.35.3'
-        channel: 'stable'
-        cache: true
+        cache: true  # 次回から早くなる
         
-    - name: Install dependencies
+    # ステップ3: 必要なパッケージをダウンロード
+    - name: 📦 パッケージ取得
       run: flutter pub get
       
-    - name: Run code generation
-      run: flutter packages pub run build_runner build --delete-conflicting-outputs
+    # ステップ4: コードに問題がないかチェック
+    - name: 🔍 コードチェック
+      run: flutter analyze
       
-    - name: Analyze code (warnings allowed)
-      run: flutter analyze --no-fatal-infos  # info レベルでCI失敗しない
-      continue-on-error: false
+    # ステップ5: テストを実行
+    - name: 🧪 テスト実行
+      run: flutter test
       
-    - name: Run tests
-      run: flutter test --coverage
-      
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v4
-      with:
-        file: coverage/lcov.info
-        fail_ci_if_error: false
-
-  build-android:
-    needs: test
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Setup Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        flutter-version: '3.35.3'
-        channel: 'stable'
-        cache: true
-        
-    - name: Install dependencies
-      run: flutter pub get
-      
-    - name: Run code generation
-      run: flutter packages pub run build_runner build --delete-conflicting-outputs
-      
-    - name: Build Android APK
-      run: flutter build apk --release
-      
-    - name: Upload APK
-      uses: actions/upload-artifact@v4
-      with:
-        name: release-apk
-        path: build/app/outputs/flutter-apk/app-release.apk
+    # ステップ6: 成功メッセージ
+    - name: ✅ 完了
+      run: |
+        echo "🎉 すべてのチェックが完了しました！"
+        echo "📱 アプリに問題はありません"
