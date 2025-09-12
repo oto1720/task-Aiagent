@@ -16,7 +16,7 @@ jobs:
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.16.9'  # Dart SDK 3.3.0と互換性のある安定版
+        flutter-version: '3.13.9'  # Dart SDK 3.2.6と互換性のあるFlutterバージョン
         channel: 'stable'
         cache: true
         
@@ -45,7 +45,7 @@ jobs:
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.16.0'
+        flutter-version: '3.13.9'
         channel: 'stable'
         cache: true
         
@@ -71,7 +71,7 @@ jobs:
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.16.0'
+        flutter-version: '3.13.9'
         channel: 'stable'
         cache: true
         
