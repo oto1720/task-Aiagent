@@ -16,12 +16,21 @@ jobs:
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.13.9'  # Dart SDK 3.2.6と互換性のあるFlutterバージョン
+        flutter-version: '3.35.3'  # ローカル環境と完全一致
         channel: 'stable'
         cache: true
         
+    - name: Verify Flutter installation
+      run: |
+        flutter --version
+        dart --version
+        flutter doctor -v
+        
     - name: Install dependencies
       run: flutter pub get
+      
+    - name: Run code generation
+      run: flutter packages pub run build_runner build --delete-conflicting-outputs
       
     - name: Analyze code
       run: flutter analyze
@@ -30,7 +39,7 @@ jobs:
       run: flutter test --coverage
       
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
       with:
         file: coverage/lcov.info
         fail_ci_if_error: false
@@ -45,18 +54,21 @@ jobs:
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.13.9'
+        flutter-version: '3.35.3'
         channel: 'stable'
         cache: true
         
     - name: Install dependencies
       run: flutter pub get
       
+    - name: Run code generation
+      run: flutter packages pub run build_runner build --delete-conflicting-outputs
+      
     - name: Build Android APK
       run: flutter build apk --release
       
     - name: Upload APK
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: release-apk
         path: build/app/outputs/flutter-apk/app-release.apk
@@ -71,12 +83,15 @@ jobs:
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.13.9'
+        flutter-version: '3.35.3'
         channel: 'stable'
         cache: true
         
     - name: Install dependencies
       run: flutter pub get
+      
+    - name: Run code generation
+      run: flutter packages pub run build_runner build --delete-conflicting-outputs
       
     - name: Build iOS (No signing)
       run: flutter build ios --release --no-codesign
