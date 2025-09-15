@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'presentation/page/home.dart';
 import 'data/datasources/local/local_storage_service.dart';
+import 'core/route/app_router.dart';
+
 
 /// TimeFlowアプリのメインエントリーポイント
 void main() async {
@@ -29,7 +31,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
+  Widget build(BuildContext context) => MaterialApp.router(
         title: 'TimeFlow - AIタスク管理',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
@@ -69,7 +71,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        home: const HomeScreen(),
+       routerConfig: router,
         debugShowCheckedModeBanner: false,
       );
 }
