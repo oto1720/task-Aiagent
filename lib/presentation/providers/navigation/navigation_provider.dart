@@ -28,5 +28,4 @@ String getTabRoute(TabType tabType){
   NavigationUseCase navigationUseCase( ref) {
     return NavigationUseCase();
   }
-  
 }

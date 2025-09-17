@@ -19,7 +19,7 @@ class BottomNavigationBarWidget extends StatelessWidget{
       selectedItemColor: Theme.of(context).primaryColor,
       unselectedItemColor: Colors.grey,
       items: TabItem.tabs.map(((tab){
-        final isSelected = tab.type == currentIndex;
+        final isSelected = TabItem.tabs.indexOf(tab) == currentIndex;
         return BottomNavigationBarItem(
           icon: Icon(isSelected ? tab.activeIcon: tab.icon),
           label: tab.label,
