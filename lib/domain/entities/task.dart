@@ -3,7 +3,11 @@ import 'package:uuid/uuid.dart';
 
 enum TaskPriority { low, medium, high }
 
-enum TaskStatus { pending, inProgress, completed }
+enum TaskStatus {
+  upcoming,     // これから
+  inProgress,   // 今日進行中
+  completed     // 完了
+}
 
 class Task {
   final String id;
@@ -14,6 +18,9 @@ class Task {
   final int estimatedMinutes;
   final DateTime createdAt;
   final DateTime? scheduledAt;
+  final DateTime? dueDate;    // いつまで（期日）
+  final int? sortOrder;       // ドラッグ&ドロップ用の並び順
+  final bool isToday;         // 今日のタスクかどうか
   final String category;
 
   Task({
@@ -21,10 +28,13 @@ class Task {
     required this.title,
     this.description = '',
     this.priority = TaskPriority.medium,
-    this.status = TaskStatus.pending,
+    this.status = TaskStatus.upcoming,
     required this.estimatedMinutes,
     DateTime? createdAt,
     this.scheduledAt,
+    this.dueDate,
+    this.sortOrder,
+    this.isToday = false,
     this.category = 'General',
   })  : id = id ?? const Uuid().v4(),
         createdAt = createdAt ?? DateTime.now();
@@ -38,6 +48,9 @@ class Task {
     int? estimatedMinutes,
     DateTime? createdAt,
     DateTime? scheduledAt,
+    DateTime? dueDate,
+    int? sortOrder,
+    bool? isToday,
     String? category,
   }) {
     return Task(
@@ -49,6 +62,9 @@ class Task {
       estimatedMinutes: estimatedMinutes ?? this.estimatedMinutes,
       createdAt: createdAt ?? this.createdAt,
       scheduledAt: scheduledAt ?? this.scheduledAt,
+      dueDate: dueDate ?? this.dueDate,
+      sortOrder: sortOrder ?? this.sortOrder,
+      isToday: isToday ?? this.isToday,
       category: category ?? this.category,
     );
   }
@@ -63,6 +79,9 @@ class Task {
       'estimatedMinutes': estimatedMinutes,
       'createdAt': createdAt.millisecondsSinceEpoch,
       'scheduledAt': scheduledAt?.millisecondsSinceEpoch,
+      'dueDate': dueDate?.millisecondsSinceEpoch,
+      'sortOrder': sortOrder,
+      'isToday': isToday,
       'category': category,
     };
   }
@@ -79,7 +98,51 @@ class Task {
       scheduledAt: json['scheduledAt'] != null
           ? DateTime.fromMillisecondsSinceEpoch(json['scheduledAt'])
           : null,
+      dueDate: json['dueDate'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(json['dueDate'])
+          : null,
+      sortOrder: json['sortOrder'],
+      isToday: json['isToday'] ?? false,
       category: json['category'] ?? 'General',
     );
+  }
+
+  // 優先度に基づく並び順を取得
+  int get priorityOrder {
+    switch (priority) {
+      case TaskPriority.high:
+        return 0;
+      case TaskPriority.medium:
+        return 1;
+      case TaskPriority.low:
+        return 2;
+    }
+  }
+
+  // 期日が今日かどうかを判定
+  bool get isDueToday {
+    if (dueDate == null) return false;
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final due = DateTime(dueDate!.year, dueDate!.month, dueDate!.day);
+    return today == due;
+  }
+
+  // 期日が明日かどうかを判定
+  bool get isDueTomorrow {
+    if (dueDate == null) return false;
+    final now = DateTime.now();
+    final tomorrow = DateTime(now.year, now.month, now.day + 1);
+    final due = DateTime(dueDate!.year, dueDate!.month, dueDate!.day);
+    return tomorrow == due;
+  }
+
+  // 期日が過ぎているかどうかを判定
+  bool get isOverdue {
+    if (dueDate == null) return false;
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final due = DateTime(dueDate!.year, dueDate!.month, dueDate!.day);
+    return due.isBefore(today);
   }
 }
