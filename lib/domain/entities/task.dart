@@ -1,7 +1,11 @@
 // lib/domain/entities/task.dart
 import 'package:uuid/uuid.dart';
-
-enum TaskPriority { low, medium, high }
+//優先度
+enum TaskPriority { 
+    low, 
+    medium, 
+    high 
+  }
 
 enum TaskStatus {
   upcoming,     // これから
@@ -10,18 +14,19 @@ enum TaskStatus {
 }
 
 class Task {
-  final String id;
-  final String title;
-  final String description;
-  final TaskPriority priority;
-  final TaskStatus status;
-  final int estimatedMinutes;
-  final DateTime createdAt;
-  final DateTime? scheduledAt;
-  final DateTime? dueDate;    // いつまで（期日）
-  final int? sortOrder;       // ドラッグ&ドロップ用の並び順
-  final bool isToday;         // 今日のタスクかどうか
-  final String category;
+  // ── プロパティ定義 ──
+  final String id;              // 一意識別子（UUID）
+  final String title;           // タスク名
+  final String description;     // タスク説明
+  final TaskPriority priority;  // 優先度
+  final TaskStatus status;      // 現在のステータス
+  final int estimatedMinutes;   // 推定所要時間（分）
+  final DateTime createdAt;     // 作成日時
+  final DateTime? scheduledAt;  // スケジュール予定日時
+  final DateTime? dueDate;      // 期日
+  final int? sortOrder;         // ドラッグ&ドロップ用の並び順
+  final bool isToday;          // 今日のタスクフラグ
+  final String category;        // カテゴリ
 
   Task({
     String? id,

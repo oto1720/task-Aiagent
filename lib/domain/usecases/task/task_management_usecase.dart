@@ -34,9 +34,14 @@ class TaskManagementUseCase {
   // これからのタスクを取得
   List<Task> getUpcomingTasks(List<Task> tasks) {
     return tasks.where((task) =>
-      task.status == TaskStatus.upcoming &&
-      !task.isToday &&
-      !task.isDueToday
+      task.status == TaskStatus.upcoming && !task.isDueToday
+    ).toList();
+  }
+
+  // 進行中のタスクを取得
+  List<Task> getInProgressTasks(List<Task> tasks) {
+    return tasks.where((task) =>
+      task.status != TaskStatus.completed && (task.status == TaskStatus.inProgress || task.isDueToday)
     ).toList();
   }
 
