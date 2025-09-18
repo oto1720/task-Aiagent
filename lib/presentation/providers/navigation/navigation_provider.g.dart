@@ -7,7 +7,7 @@ part of 'navigation_provider.dart';
 // **************************************************************************
 
 String _$navigationNotifierHash() =>
-    r'703094eba739c902bdfc9533b3af838c4acdfb2a';
+    r'268d2d0423055d154defd4a370aae6fdf1ba985e';
 
 /// See also [NavigationNotifier].
 @ProviderFor(NavigationNotifier)
