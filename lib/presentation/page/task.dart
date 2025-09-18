@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:task_aiagent/presentation/providers/task_provider.dart';
 import 'package:task_aiagent/domain/entities/task.dart';
 import 'package:task_aiagent/domain/usecases/task/task_management_usecase.dart';
-import 'package:task_aiagent/presentation/widgets/task/task_list.dart';
+import 'package:task_aiagent/presentation/widgets/task/task_board.dart';
 import 'package:task_aiagent/presentation/widgets/task/task_stats_card.dart';
 import 'package:task_aiagent/presentation/widgets/task/task_form_dialog.dart';
 
@@ -14,23 +14,14 @@ class TaskScreen extends ConsumerStatefulWidget {
   ConsumerState<TaskScreen> createState() => _TaskScreenState();
 }
 
-class _TaskScreenState extends ConsumerState<TaskScreen>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+class _TaskScreenState extends ConsumerState<TaskScreen> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
 
   final _taskManagement = TaskManagementUseCase();
 
   @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 3, vsync: this);
-  }
-
-  @override
   void dispose() {
-    _tabController.dispose();
     _searchController.dispose();
     super.dispose();
   }
@@ -42,44 +33,31 @@ class _TaskScreenState extends ConsumerState<TaskScreen>
 
     final filteredTasks = _taskManagement.filterTasks(tasks, _searchQuery);
     final upcomingTasks = _taskManagement.getUpcomingTasks(filteredTasks);
-    final todayTasks = _taskManagement.getTodayTasks(filteredTasks);
+    final inProgressTasks = _taskManagement.getInProgressTasks(filteredTasks);
     final completedTasks = _taskManagement.getCompletedTasks(filteredTasks);
 
     return Scaffold(
-      appBar: _buildAppBar(upcomingTasks, todayTasks, completedTasks),
+      appBar: _buildAppBar(),
       body: Column(
         children: [
+          // 統計カード
           TaskStatsCard(stats: taskStats),
+
+          // 検索バー
+          _buildSearchBar(),
+
+          // Kanbanボード
           Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [
-                TaskList(
-                  tasks: upcomingTasks,
-                  tabStatus: TaskStatus.upcoming,
-                  onReorder: _handleReorder,
-                  onStatusToggle: _handleStatusToggle,
-                  onComplete: _handleComplete,
-                  onEdit: _handleEdit,
-                  onDelete: _handleDelete,
-                ),
-                TaskList(
-                  tasks: todayTasks,
-                  tabStatus: TaskStatus.inProgress,
-                  onReorder: _handleReorder,
-                  onStatusToggle: _handleStatusToggle,
-                  onComplete: _handleComplete,
-                  onEdit: _handleEdit,
-                  onDelete: _handleDelete,
-                ),
-                TaskList(
-                  tasks: completedTasks,
-                  tabStatus: TaskStatus.completed,
-                  onComplete: _handleComplete,
-                  onEdit: _handleEdit,
-                  onDelete: _handleDelete,
-                ),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TaskBoard(
+                upcomingTasks: upcomingTasks,
+                inProgressTasks: inProgressTasks,
+                completedTasks: completedTasks,
+                onTaskStatusChanged: _handleTaskStatusChanged,
+                onTaskEdit: _handleTaskEdit,
+                onTaskDelete: _handleTaskDelete,
+              ),
             ),
           ),
         ],
@@ -92,29 +70,17 @@ class _TaskScreenState extends ConsumerState<TaskScreen>
     );
   }
 
-  PreferredSizeWidget _buildAppBar(
-    List<Task> upcomingTasks,
-    List<Task> todayTasks,
-    List<Task> completedTasks,
-  ) {
+  PreferredSizeWidget _buildAppBar() {
     return AppBar(
-      title: const Text('タスク管理'),
+      title: const Text('タスク管理ボード'),
       backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(100),
-        child: Column(
-          children: [
-            _buildSearchBar(),
-            _buildTabBar(upcomingTasks, todayTasks, completedTasks),
-          ],
-        ),
-      ),
+      centerTitle: true,
     );
   }
 
   Widget _buildSearchBar() {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: TextField(
         controller: _searchController,
         decoration: InputDecoration(
@@ -126,34 +92,16 @@ class _TaskScreenState extends ConsumerState<TaskScreen>
                   onPressed: _clearSearch,
                 )
               : null,
-          border: const OutlineInputBorder(),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
         ),
         onChanged: _updateSearchQuery,
       ),
-    );
-  }
-
-  Widget _buildTabBar(
-    List<Task> upcomingTasks,
-    List<Task> todayTasks,
-    List<Task> completedTasks,
-  ) {
-    return TabBar(
-      controller: _tabController,
-      tabs: [
-        Tab(
-          text: 'これから (${upcomingTasks.length})',
-          icon: const Icon(Icons.schedule),
-        ),
-        Tab(
-          text: '今日のタスク (${todayTasks.length})',
-          icon: const Icon(Icons.today),
-        ),
-        Tab(
-          text: '完了 (${completedTasks.length})',
-          icon: const Icon(Icons.check_circle),
-        ),
-      ],
     );
   }
 
@@ -170,53 +118,21 @@ class _TaskScreenState extends ConsumerState<TaskScreen>
     });
   }
 
-  void _handleReorder(int oldIndex, int newIndex) {
-    final tasks = ref.read(taskListProvider);
-    final currentTab = _tabController.index;
+  void _handleTaskStatusChanged(Task task, TaskStatus newStatus) {
+    print('_handleTaskStatusChanged: task=${task.title}, oldStatus=${task.status}, newStatus=$newStatus');
 
-    List<Task> relevantTasks;
-    switch (currentTab) {
-      case 0:
-        relevantTasks = _taskManagement.getUpcomingTasks(tasks);
-        break;
-      case 1:
-        relevantTasks = _taskManagement.getTodayTasks(tasks);
-        break;
-      default:
-        return; // 完了タスクは並び替え不可
-    }
+    // toggleTaskStatusではなく、直接copyWithを使用
+    final updatedTask = task.copyWith(status: newStatus);
+    print('updatedTask: title=${updatedTask.title}, status=${updatedTask.status}');
 
-    final reorderedTasks = _taskManagement.updateTaskOrder(
-      relevantTasks,
-      oldIndex,
-      newIndex,
-    );
-
-    // 並び替えられたタスクを保存
-    for (final task in reorderedTasks) {
-      ref.read(taskListProvider.notifier).updateTask(task);
-    }
-  }
-
-  void _handleStatusToggle(Task task) {
-    final newStatus = task.status == TaskStatus.inProgress
-        ? TaskStatus.upcoming
-        : TaskStatus.inProgress;
-
-    final updatedTask = _taskManagement.toggleTaskStatus(task, newStatus);
     ref.read(taskListProvider.notifier).updateTask(updatedTask);
   }
 
-  void _handleComplete(Task task) {
-    final updatedTask = _taskManagement.toggleCompletion(task);
-    ref.read(taskListProvider.notifier).updateTask(updatedTask);
-  }
-
-  void _handleEdit(Task task) {
+  void _handleTaskEdit(Task task) {
     _showEditTaskDialog(task);
   }
 
-  void _handleDelete(Task task) {
+  void _handleTaskDelete(Task task) {
     _showDeleteConfirmDialog(task);
   }
 

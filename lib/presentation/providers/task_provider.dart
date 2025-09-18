@@ -66,10 +66,17 @@ class TaskListNotifier extends StateNotifier<List<Task>> {
 
   Future<void> updateTask(Task updatedTask) async {
     try {
+      print('TaskListNotifier.updateTask: ${updatedTask.title}, status=${updatedTask.status}');
       await _taskRepository.updateTask(updatedTask);
+
+      final oldState = state;
       state = state.map((task) {
         return task.id == updatedTask.id ? updatedTask : task;
       }).toList();
+
+      print('Task updated in state. Old count: ${oldState.length}, New count: ${state.length}');
+      final updatedTaskInState = state.firstWhere((t) => t.id == updatedTask.id);
+      print('Updated task in state: ${updatedTaskInState.title}, status=${updatedTaskInState.status}');
     } catch (e) {
       print('Error updating task: $e');
     }
