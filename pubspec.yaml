@@ -39,6 +39,7 @@ dependencies:
   # 日時処理
   intl: ^0.20.0
   timezone: ^0.9.4
+  table_calendar: ^3.1.2
   
   # カレンダー連携
   google_sign_in: ^6.2.0
