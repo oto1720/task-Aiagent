@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:task_aiagent/domain/entities/navigation/navigation_state.dart';
-import 'package:task_aiagent/domain/usecase/navigation_usecase.dart';
+import 'package:task_aiagent/domain/usecases/navigation/navigation_usecase.dart';
 import 'package:task_aiagent/domain/entities/navigation/tab_item.dart';
 
 part 'navigation_provider.g.dart';
