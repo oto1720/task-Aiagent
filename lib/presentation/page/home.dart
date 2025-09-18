@@ -6,6 +6,7 @@ import 'package:task_aiagent/presentation/page/task.dart';
 import 'package:task_aiagent/presentation/providers/task_provider.dart';
 import 'package:task_aiagent/domain/entities/schedule.dart';
 import 'package:task_aiagent/domain/entities/task.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -391,10 +392,7 @@ class HomeScreen extends ConsumerWidget {
                   ],
                 ),
                 TextButton(
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const TaskScreen()),
-                  ),
+                  onPressed: () => context.go('/tasks'),
                   child: const Text('すべて見る'),
                 ),
               ],
