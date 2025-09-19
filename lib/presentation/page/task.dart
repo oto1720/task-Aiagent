@@ -62,13 +62,13 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
       );
   }
 
-  PreferredSizeWidget _buildAppBar() {
-    return AppBar(
-      title: const Text('タスク管理ボード'),
-      backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      centerTitle: true,
-    );
-  }
+  // PreferredSizeWidget _buildAppBar() {
+  //   return AppBar(
+  //     title: const Text('タスク管理ボード'),
+  //     backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+  //     centerTitle: true,
+  //   );
+  // }
 
   Widget _buildSearchBar() {
     return Padding(
@@ -128,16 +128,16 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
     _showDeleteConfirmDialog(task);
   }
 
-  void _showAddTaskDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => TaskFormDialog(
-        onSave: (task) {
-          ref.read(taskListProvider.notifier).addTask(task);
-        },
-      ),
-    );
-  }
+  // void _showAddTaskDialog() {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) => TaskFormDialog(
+  //       onSave: (task) {
+  //         ref.read(taskListProvider.notifier).addTask(task);
+  //       },
+  //     ),
+  //   );
+  // }
 
   void _showEditTaskDialog(Task task) {
     showDialog(
