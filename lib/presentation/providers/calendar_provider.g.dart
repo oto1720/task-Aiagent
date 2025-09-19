@@ -171,6 +171,21 @@ class _TasksForDayProviderElement extends AutoDisposeProviderElement<List<Task>>
   DateTime get day => (origin as TasksForDayProvider).day;
 }
 
+String _$todayScheduleHash() => r'a5474aa5c81227c7c703f18c2d2e4ae8a6246c10';
+
+/// See also [todaySchedule].
+@ProviderFor(todaySchedule)
+final todayScheduleProvider = AutoDisposeProvider<DailySchedule?>.internal(
+  todaySchedule,
+  name: r'todayScheduleProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$todayScheduleHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef TodayScheduleRef = AutoDisposeProviderRef<DailySchedule?>;
 String _$selectedDayHash() => r'78d02c1ad7f06ab41297b5152760a1d09d3eeb23';
 
 /// See also [SelectedDay].
@@ -186,5 +201,22 @@ final selectedDayProvider =
 );
 
 typedef _$SelectedDay = AutoDisposeNotifier<DateTime>;
+String _$combinedTodayScheduleHash() =>
+    r'68a470c340693009abec8f1e355362a8b6b5143d';
+
+/// See also [CombinedTodaySchedule].
+@ProviderFor(CombinedTodaySchedule)
+final combinedTodayScheduleProvider =
+    AutoDisposeNotifierProvider<CombinedTodaySchedule, List<dynamic>>.internal(
+  CombinedTodaySchedule.new,
+  name: r'combinedTodayScheduleProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$combinedTodayScheduleHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$CombinedTodaySchedule = AutoDisposeNotifier<List<dynamic>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

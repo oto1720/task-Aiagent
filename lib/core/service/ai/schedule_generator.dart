@@ -1,5 +1,4 @@
-// lib/services/ai/schedule_generator.dart
-import 'dart:math';
+// lib/services/ai/schedule_generator.dartzw
 import 'package:task_aiagent/domain/entities/task.dart';
 import 'package:task_aiagent/domain/entities/schedule.dart';
 
@@ -117,7 +116,7 @@ class ScheduleGeneratorService {
   ) {
     // 例：ユーザーが朝型か夜型かによる調整
     final isMorningPerson = preferences['isMorningPerson'] ?? true;
-    final preferredBreakDuration = preferences['breakDuration'] ?? 15;
+    //final preferredBreakDuration = preferences['breakDuration'] ?? 15;
 
     if (!isMorningPerson) {
       // 夜型の人は午後に重要なタスクを配置
