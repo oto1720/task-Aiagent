@@ -17,18 +17,7 @@ class HomeScreen extends ConsumerWidget {
     final todaySchedule = ref.watch(todayScheduleProvider);
     final pendingTasks = ref.watch(pendingTasksProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('TimeFlow'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => _showAddTaskDialog(context, ref),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
+    return SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,16 +42,7 @@ class HomeScreen extends ConsumerWidget {
             _buildUpcomingTasks(context, ref, pendingTasks),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const TaskScreen()),
-        ),
-        label: const Text('タスク管理'),
-        icon: const Icon(Icons.task_alt),
-      ),
-    );
+      );
   }
 
   Widget _buildDateHeader() {

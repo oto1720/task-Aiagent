@@ -4,6 +4,19 @@ import 'package:task_aiagent/presentation/providers/task_provider.dart';
 
 part 'calendar_provider.g.dart';
 
+// 選択された日付を管理する NotifierProvider
+@riverpod
+class SelectedDay extends _$SelectedDay {
+  @override
+  DateTime build() {
+    return DateTime.now();
+  }
+  void set(DateTime date) {
+    // 時刻情報をリセットして日付のみを保持
+    state = DateTime.utc(date.year, date.month, date.day);
+  }
+}
+
 // カレンダーに表示するイベント（タスク）を日付ごとにグループ化して提供する Provider
 @riverpod
 Map<DateTime, List<Task>> calendarEvents(CalendarEventsRef ref) {
