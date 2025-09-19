@@ -36,9 +36,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
     final inProgressTasks = _taskManagement.getInProgressTasks(filteredTasks);
     final completedTasks = _taskManagement.getCompletedTasks(filteredTasks);
 
-    return Scaffold(
-      appBar: _buildAppBar(),
-      body: Column(
+    return Column(
         children: [
           // 統計カード
           TaskStatsCard(stats: taskStats),
@@ -61,13 +59,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
             ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _showAddTaskDialog,
-        icon: const Icon(Icons.add),
-        label: const Text('タスク追加'),
-      ),
-    );
+      );
   }
 
   PreferredSizeWidget _buildAppBar() {
