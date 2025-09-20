@@ -3,10 +3,12 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_aiagent/domain/entities/task.dart';
 import 'package:task_aiagent/domain/entities/schedule.dart';
+import 'package:task_aiagent/domain/entities/personal_schedule.dart';
 
 class LocalStorageService {
   static const String _tasksKey = 'tasks';
   static const String _schedulesKey = 'schedules';
+  static const String _personalSchedulesKey = 'personal_schedules';
 
   SharedPreferences? _prefs;
 
@@ -99,5 +101,54 @@ class LocalStorageService {
     } catch (e) {
       return null;
     }
+  }
+
+  // 個人スケジュール関連のメソッド
+  Future<List<PersonalSchedule>> getPersonalSchedules() async {
+    final prefs = await _getPrefs();
+    final personalSchedulesJson = prefs.getString(_personalSchedulesKey);
+    if (personalSchedulesJson == null) return [];
+
+    final List<dynamic> schedulesList = json.decode(personalSchedulesJson);
+    return schedulesList
+        .map((scheduleJson) => PersonalSchedule.fromJson(scheduleJson))
+        .toList();
+  }
+
+  Future<void> savePersonalSchedules(List<PersonalSchedule> schedules) async {
+    final prefs = await _getPrefs();
+    final schedulesJson = json.encode(
+      schedules.map((schedule) => schedule.toJson()).toList(),
+    );
+    await prefs.setString(_personalSchedulesKey, schedulesJson);
+  }
+
+  Future<void> addPersonalSchedule(PersonalSchedule schedule) async {
+    final schedules = await getPersonalSchedules();
+    schedules.add(schedule);
+    await savePersonalSchedules(schedules);
+  }
+
+  Future<void> updatePersonalSchedule(PersonalSchedule schedule) async {
+    final schedules = await getPersonalSchedules();
+    final index = schedules.indexWhere((s) => s.id == schedule.id);
+    if (index != -1) {
+      schedules[index] = schedule;
+      await savePersonalSchedules(schedules);
+    }
+  }
+
+  Future<void> deletePersonalSchedule(String scheduleId) async {
+    final schedules = await getPersonalSchedules();
+    schedules.removeWhere((schedule) => schedule.id == scheduleId);
+    await savePersonalSchedules(schedules);
+  }
+
+  Future<List<PersonalSchedule>> getPersonalSchedulesForDate(DateTime date) async {
+    final schedules = await getPersonalSchedules();
+    return schedules.where((schedule) =>
+        schedule.date.year == date.year &&
+        schedule.date.month == date.month &&
+        schedule.date.day == date.day).toList();
   }
 }

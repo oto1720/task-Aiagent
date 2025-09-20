@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:task_aiagent/presentation/page/task.dart';
 import 'package:task_aiagent/presentation/providers/task_provider.dart';
 import 'package:task_aiagent/domain/entities/schedule.dart';
 import 'package:task_aiagent/domain/entities/task.dart';
@@ -17,18 +16,7 @@ class HomeScreen extends ConsumerWidget {
     final todaySchedule = ref.watch(todayScheduleProvider);
     final pendingTasks = ref.watch(pendingTasksProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('TimeFlow'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => _showAddTaskDialog(context, ref),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
+    return SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,16 +41,7 @@ class HomeScreen extends ConsumerWidget {
             _buildUpcomingTasks(context, ref, pendingTasks),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const TaskScreen()),
-        ),
-        label: const Text('タスク管理'),
-        icon: const Icon(Icons.task_alt),
-      ),
-    );
+      );
   }
 
   Widget _buildDateHeader() {
@@ -508,114 +487,114 @@ class HomeScreen extends ConsumerWidget {
     }
   }
 
-  Future<void> _showAddTaskDialog(BuildContext context, WidgetRef ref) async {
-    final titleController = TextEditingController();
-    final descriptionController = TextEditingController();
-    final categoryController = TextEditingController(text: 'General');
-    TaskPriority selectedPriority = TaskPriority.medium;
-    int estimatedMinutes = 30;
+//   Future<void> _showAddTaskDialog(BuildContext context, WidgetRef ref) async {
+//     final titleController = TextEditingController();
+//     final descriptionController = TextEditingController();
+//     final categoryController = TextEditingController(text: 'General');
+//     TaskPriority selectedPriority = TaskPriority.medium;
+//     int estimatedMinutes = 30;
 
-    return showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('新しいタスクを追加'),
-        content: StatefulBuilder(
-          builder: (context, setState) => SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: titleController,
-                  decoration: const InputDecoration(
-                    labelText: 'タスク名*',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: descriptionController,
-                  decoration: const InputDecoration(
-                    labelText: '説明',
-                    border: OutlineInputBorder(),
-                  ),
-                  maxLines: 2,
-                ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: categoryController,
-                  decoration: const InputDecoration(
-                    labelText: 'カテゴリ',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                DropdownButtonFormField<TaskPriority>(
-                  value: selectedPriority,
-                  decoration: const InputDecoration(
-                    labelText: '優先度',
-                    border: OutlineInputBorder(),
-                  ),
-                  items: TaskPriority.values.map((priority) {
-                    return DropdownMenuItem(
-                      value: priority,
-                      child: Text(_getPriorityText(priority)),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      selectedPriority = value!;
-                    });
-                  },
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    const Text('推定時間: '),
-                    Expanded(
-                      child: Slider(
-                        value: estimatedMinutes.toDouble(),
-                        min: 15,
-                        max: 180,
-                        divisions: 11,
-                        label: '$estimatedMinutes分',
-                        onChanged: (value) {
-                          setState(() {
-                            estimatedMinutes = value.round();
-                          });
-                        },
-                      ),
-                    ),
-                    Text('$estimatedMinutes分'),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('キャンセル'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              if (titleController.text.isNotEmpty) {
-                final task = Task(
-                  title: titleController.text,
-                  description: descriptionController.text,
-                  category: categoryController.text,
-                  priority: selectedPriority,
-                  estimatedMinutes: estimatedMinutes,
-                );
+//     return showDialog(
+//       context: context,
+//       builder: (context) => AlertDialog(
+//         title: const Text('新しいタスクを追加'),
+//         content: StatefulBuilder(
+//           builder: (context, setState) => SingleChildScrollView(
+//             child: Column(
+//               mainAxisSize: MainAxisSize.min,
+//               children: [
+//                 TextField(
+//                   controller: titleController,
+//                   decoration: const InputDecoration(
+//                     labelText: 'タスク名*',
+//                     border: OutlineInputBorder(),
+//                   ),
+//                 ),
+//                 const SizedBox(height: 16),
+//                 TextField(
+//                   controller: descriptionController,
+//                   decoration: const InputDecoration(
+//                     labelText: '説明',
+//                     border: OutlineInputBorder(),
+//                   ),
+//                   maxLines: 2,
+//                 ),
+//                 const SizedBox(height: 16),
+//                 TextField(
+//                   controller: categoryController,
+//                   decoration: const InputDecoration(
+//                     labelText: 'カテゴリ',
+//                     border: OutlineInputBorder(),
+//                   ),
+//                 ),
+//                 const SizedBox(height: 16),
+//                 DropdownButtonFormField<TaskPriority>(
+//                   value: selectedPriority,
+//                   decoration: const InputDecoration(
+//                     labelText: '優先度',
+//                     border: OutlineInputBorder(),
+//                   ),
+//                   items: TaskPriority.values.map((priority) {
+//                     return DropdownMenuItem(
+//                       value: priority,
+//                       child: Text(_getPriorityText(priority)),
+//                     );
+//                   }).toList(),
+//                   onChanged: (value) {
+//                     setState(() {
+//                       selectedPriority = value!;
+//                     });
+//                   },
+//                 ),
+//                 const SizedBox(height: 16),
+//                 Row(
+//                   children: [
+//                     const Text('推定時間: '),
+//                     Expanded(
+//                       child: Slider(
+//                         value: estimatedMinutes.toDouble(),
+//                         min: 15,
+//                         max: 180,
+//                         divisions: 11,
+//                         label: '$estimatedMinutes分',
+//                         onChanged: (value) {
+//                           setState(() {
+//                             estimatedMinutes = value.round();
+//                           });
+//                         },
+//                       ),
+//                     ),
+//                     Text('$estimatedMinutes分'),
+//                   ],
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//         actions: [
+//           TextButton(
+//             onPressed: () => Navigator.of(context).pop(),
+//             child: const Text('キャンセル'),
+//           ),
+//           ElevatedButton(
+//             onPressed: () {
+//               if (titleController.text.isNotEmpty) {
+//                 final task = Task(
+//                   title: titleController.text,
+//                   description: descriptionController.text,
+//                   category: categoryController.text,
+//                   priority: selectedPriority,
+//                   estimatedMinutes: estimatedMinutes,
+//                 );
                 
-                ref.read(taskListProvider.notifier).addTask(task);
-                Navigator.of(context).pop();
-              }
-            },
-            child: const Text('追加'),
-          ),
-        ],
-      ),
-    );
-  }
-}
+//                 ref.read(taskListProvider.notifier).addTask(task);
+//                 Navigator.of(context).pop();
+//               }
+//             },
+//             child: const Text('追加'),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+ }

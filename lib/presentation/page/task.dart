@@ -36,9 +36,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
     final inProgressTasks = _taskManagement.getInProgressTasks(filteredTasks);
     final completedTasks = _taskManagement.getCompletedTasks(filteredTasks);
 
-    return Scaffold(
-      appBar: _buildAppBar(),
-      body: Column(
+    return Column(
         children: [
           // 統計カード
           TaskStatsCard(stats: taskStats),
@@ -61,22 +59,16 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
             ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _showAddTaskDialog,
-        icon: const Icon(Icons.add),
-        label: const Text('タスク追加'),
-      ),
-    );
+      );
   }
 
-  PreferredSizeWidget _buildAppBar() {
-    return AppBar(
-      title: const Text('タスク管理ボード'),
-      backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      centerTitle: true,
-    );
-  }
+  // PreferredSizeWidget _buildAppBar() {
+  //   return AppBar(
+  //     title: const Text('タスク管理ボード'),
+  //     backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+  //     centerTitle: true,
+  //   );
+  // }
 
   Widget _buildSearchBar() {
     return Padding(
@@ -136,16 +128,16 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
     _showDeleteConfirmDialog(task);
   }
 
-  void _showAddTaskDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => TaskFormDialog(
-        onSave: (task) {
-          ref.read(taskListProvider.notifier).addTask(task);
-        },
-      ),
-    );
-  }
+  // void _showAddTaskDialog() {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) => TaskFormDialog(
+  //       onSave: (task) {
+  //         ref.read(taskListProvider.notifier).addTask(task);
+  //       },
+  //     ),
+  //   );
+  // }
 
   void _showEditTaskDialog(Task task) {
     showDialog(
