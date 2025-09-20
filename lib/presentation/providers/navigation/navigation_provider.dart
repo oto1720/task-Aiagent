@@ -12,7 +12,7 @@ class NavigationNotifier extends _$NavigationNotifier {
   @override
   NavigationState build() {
     _navigationUseCase = NavigationUseCase();
-    return const NavigationState();
+    return const NavigationState(currentTab: TabType.home, currentIndex: 0);
   }
 
 void switchTab(TabType tabType){

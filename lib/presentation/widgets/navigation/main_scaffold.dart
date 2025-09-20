@@ -35,7 +35,7 @@ class MainScaffold extends ConsumerWidget{
       bottomNavigationBar: BottomNavigationBarWidget(
         currentIndex: selectedIndex,
         onTap: (index){
-          ref.read(navigationNotifierProvider.notifier).switchTabByIndex(index);
+          ref.read(navigationProvider.notifier).switchTabByIndex(index);
           context.go(TabItem.tabs[index].route);
         }
       ),
