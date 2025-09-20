@@ -1,12 +1,23 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'tab_item.dart';
+import 'package:flutter/foundation.dart';
+import 'package:task_aiagent/domain/entities/navigation/tab_item.dart';
 
-part 'navigation_state.freezed.dart';
+@immutable
+class NavigationState {
+  final TabType currentTab;
+  final int currentIndex;
 
-@freezed
-class NavigationState with _$NavigationState {
-  const factory NavigationState({
-    @Default(TabType.home) TabType currentTab,
-    @Default(0) int currentIndex,
-  }) = _NavigationState;
+  const NavigationState({
+    this.currentTab = TabType.home,
+    this.currentIndex = 0,
+  });
+
+  NavigationState copyWith({
+    TabType? currentTab,
+    int? currentIndex,
+  }) {
+    return NavigationState(
+      currentTab: currentTab ?? this.currentTab,
+      currentIndex: currentIndex ?? this.currentIndex,
+    );
+  }
 }

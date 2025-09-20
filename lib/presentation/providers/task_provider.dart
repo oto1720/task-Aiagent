@@ -1,5 +1,6 @@
 // lib/presentation/providers/task_provider.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:task_aiagent/domain/entities/task.dart';
 import 'package:task_aiagent/domain/entities/schedule.dart';
 import 'package:task_aiagent/domain/repositories/task_repository.dart';
@@ -7,6 +8,8 @@ import 'package:task_aiagent/data/repositories/task_repository_impl.dart';
 import 'package:task_aiagent/data/datasources/local/local_storage_service.dart';
 import 'package:task_aiagent/core/service/ai/schedule_generator.dart';
 import 'package:task_aiagent/domain/usecases/task/task_management_usecase.dart';
+
+part 'task_provider.g.dart';
 
 // ローカルストレージサービスのプロバイダー
 final localStorageServiceProvider = Provider<LocalStorageService>((ref) {
@@ -31,20 +34,19 @@ final scheduleGeneratorProvider = Provider<ScheduleGeneratorService>((ref) {
 });
 
 // タスクリストの状態管理
-final taskListProvider = StateNotifierProvider<TaskListNotifier, List<Task>>((ref) {
-  return TaskListNotifier(
-    ref.read(taskRepositoryProvider),
-    ref.read(taskManagementUseCaseProvider),
-  );
-});
+@riverpod
+class TaskListNotifier extends _$TaskListNotifier {
+  late final TaskRepository _taskRepository;
+  late final TaskManagementUseCase _taskManagement;
 
-class TaskListNotifier extends StateNotifier<List<Task>> {
-  final TaskRepository _taskRepository;
-  final TaskManagementUseCase _taskManagement;
-
-  TaskListNotifier(this._taskRepository, this._taskManagement) : super([]) {
+  @override
+  List<Task> build() {
+    _taskRepository = ref.read(taskRepositoryProvider);
+    _taskManagement = ref.read(taskManagementUseCaseProvider);
     _loadTasks();
+    return [];
   }
+
 
   Future<void> _loadTasks() async {
     try {
@@ -118,26 +120,21 @@ class TaskListNotifier extends StateNotifier<List<Task>> {
 }
 
 // 今日のスケジュールの状態管理
-final todayScheduleProvider = StateNotifierProvider<ScheduleNotifier, DailySchedule?>((ref) {
-  return ScheduleNotifier(
-    ref.read(localStorageServiceProvider),
-    ref.read(scheduleGeneratorProvider),
-    ref.read(taskListProvider.notifier),
-  );
-});
+@riverpod
+class ScheduleNotifier extends _$ScheduleNotifier {
+  late final LocalStorageService _storageService;
+  late final ScheduleGeneratorService _scheduleGenerator;
+  late final TaskListNotifier _taskNotifier;
 
-class ScheduleNotifier extends StateNotifier<DailySchedule?> {
-  final LocalStorageService _storageService;
-  final ScheduleGeneratorService _scheduleGenerator;
-  final TaskListNotifier _taskNotifier;
-
-  ScheduleNotifier(
-    this._storageService,
-    this._scheduleGenerator,
-    this._taskNotifier,
-  ) : super(null) {
+  @override
+  DailySchedule? build() {
+    _storageService = ref.read(localStorageServiceProvider);
+    _scheduleGenerator = ref.read(scheduleGeneratorProvider);
+    _taskNotifier = ref.read(taskListProvider.notifier);
     _loadTodaySchedule();
+    return null;
   }
+
 
   Future<void> _loadTodaySchedule() async {
     try {

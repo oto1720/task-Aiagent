@@ -13,20 +13,20 @@ dependencies:
   cupertino_icons: ^1.0.8
   
   # 状態管理（互換版）
-  flutter_riverpod: ^2.6.1
-  riverpod_annotation: ^2.6.0
+  flutter_riverpod: ^3.0.0
+  riverpod_annotation: ^3.0.0
   
   # Firebase（最新版）
-  firebase_core: ^3.6.0
-  firebase_auth: ^5.3.0
-  cloud_firestore: ^5.4.0
-  firebase_storage: ^12.3.0
-  firebase_analytics: ^11.3.0
-  cloud_functions: ^5.1.0
+  firebase_core: ^4.1.0
+  firebase_auth: ^6.0.2
+  cloud_firestore: ^6.0.1
+  firebase_storage: ^13.0.1
+  firebase_analytics: ^12.0.1
+  cloud_functions: ^6.0.1
   
   # UI/UX（Flutter SDK固定版）
   material_color_utilities: ^0.11.1
-  go_router: ^14.6.0
+  go_router: ^16.2.2
   
   # ローカルストレージ
   shared_preferences: ^2.3.0
@@ -42,8 +42,8 @@ dependencies:
   table_calendar: ^3.1.2
   
   # カレンダー連携
-  google_sign_in: ^6.2.0
-  googleapis: ^13.2.0
+  google_sign_in: ^7.2.0
+  googleapis: ^14.0.0
   device_calendar: ^4.3.3
   
   # 通知
@@ -55,8 +55,8 @@ dependencies:
   # その他ユーティリティ
   uuid: ^4.5.0
   path_provider: ^2.1.0
-  permission_handler: ^11.3.0
-  freezed_annotation: ^2.4.4
+  permission_handler: ^12.0.1
+  freezed_annotation: ^3.1.0
   json_annotation: ^4.9.0
 
 dev_dependencies:
@@ -65,9 +65,8 @@ dev_dependencies:
   
   # コード生成（互換版）
   build_runner: ^2.4.13
-  riverpod_generator: ^2.4.0
-  hive_generator: ^2.0.1
-  freezed: ^2.5.2
+  riverpod_generator: ^3.0.0
+  freezed: ^3.2.3
   json_serializable: ^6.8.0
   
   # テスト
@@ -76,8 +75,8 @@ dev_dependencies:
     sdk: flutter
   
   # コード品質（最新版）
-  flutter_lints: ^5.0.0
-  very_good_analysis: ^6.0.0
+  flutter_lints: ^6.0.0
+  very_good_analysis: ^10.0.0
 
 flutter:
   uses-material-design: true

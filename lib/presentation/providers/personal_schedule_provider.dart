@@ -8,7 +8,7 @@ part 'personal_schedule_provider.g.dart';
 
 // PersonalScheduleRepositoryのプロバイダー
 @riverpod
-PersonalScheduleRepository personalScheduleRepository(PersonalScheduleRepositoryRef ref) {
+PersonalScheduleRepository personalScheduleRepository(Ref ref) {
   return PersonalScheduleRepositoryImpl(ref.read(localStorageServiceProvider));
 }
 
@@ -64,7 +64,7 @@ class PersonalScheduleList extends _$PersonalScheduleList {
 }
 
 @riverpod
-Map<DateTime, List<PersonalSchedule>> personalScheduleEvents(PersonalScheduleEventsRef ref) {
+Map<DateTime, List<PersonalSchedule>> personalScheduleEvents(Ref ref) {
   final schedules = ref.watch(personalScheduleListProvider);
   final events = <DateTime, List<PersonalSchedule>>{};
 
@@ -89,14 +89,14 @@ Map<DateTime, List<PersonalSchedule>> personalScheduleEvents(PersonalScheduleEve
 }
 
 @riverpod
-List<PersonalSchedule> personalSchedulesForDay(PersonalSchedulesForDayRef ref, DateTime day) {
+List<PersonalSchedule> personalSchedulesForDay(Ref ref, DateTime day) {
   final events = ref.watch(personalScheduleEventsProvider);
   final dateKey = DateTime.utc(day.year, day.month, day.day);
   return events[dateKey] ?? [];
 }
 
 @riverpod
-List<PersonalSchedule> todayPersonalSchedules(TodayPersonalSchedulesRef ref) {
+List<PersonalSchedule> todayPersonalSchedules(Ref ref) {
   final today = DateTime.now();
   return ref.watch(personalSchedulesForDayProvider(today));
 }
