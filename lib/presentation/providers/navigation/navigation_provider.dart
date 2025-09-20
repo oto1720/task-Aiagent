@@ -24,7 +24,7 @@ void switchTabByIndex(int index){
 String getTabRoute(TabType tabType){
   return _navigationUseCase.getRouteForTab(state.currentTab);
 }
-  @riverpod
+  
   NavigationUseCase navigationUseCase( ref) {
     return NavigationUseCase();
   }

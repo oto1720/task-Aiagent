@@ -7,11 +7,13 @@ import 'package:task_aiagent/domain/usecases/task/task_management_usecase.dart';
 class TaskFormDialog extends StatefulWidget {
   final Task? task;
   final Function(Task) onSave;
+  final DateTime? initialDueDate;
 
   const TaskFormDialog({
     super.key,
     this.task,
     required this.onSave,
+    this.initialDueDate,
   });
 
   @override
@@ -50,6 +52,8 @@ class _TaskFormDialogState extends State<TaskFormDialog> {
       _priority = widget.task!.priority;
       _dueDate = widget.task!.dueDate;
       _isToday = widget.task!.isToday;
+    } else {
+      _dueDate = widget.initialDueDate;
     }
   }
 
