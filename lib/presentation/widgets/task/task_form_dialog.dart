@@ -123,7 +123,7 @@ class _TaskFormDialogState extends State<TaskFormDialog> {
 
   Widget _buildPriorityField() {
     return DropdownButtonFormField<TaskPriority>(
-      value: _priority,
+      initialValue: _priority,
       decoration: const InputDecoration(
         labelText: '優先度',
         border: OutlineInputBorder(),

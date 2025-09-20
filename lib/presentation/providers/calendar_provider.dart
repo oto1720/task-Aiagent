@@ -22,7 +22,7 @@ class SelectedDay extends _$SelectedDay {
 
 // カレンダーに表示するイベント（タスク）を日付ごとにグループ化して提供する Provider
 @riverpod
-Map<DateTime, List<Task>> calendarEvents(CalendarEventsRef ref) {
+Map<DateTime, List<Task>> calendarEvents(Ref ref) {
   final tasks = ref.watch(taskListProvider);
   final events = <DateTime, List<Task>>{};
 
@@ -41,7 +41,7 @@ Map<DateTime, List<Task>> calendarEvents(CalendarEventsRef ref) {
 
 // 選択された日付のタスクリストを提供する Provider
 @riverpod
-List<Task> tasksForDay(TasksForDayRef ref, DateTime day) {
+List<Task> tasksForDay(Ref ref, DateTime day) {
   final events = ref.watch(calendarEventsProvider);
   final dateKey = DateTime.utc(day.year, day.month, day.day);
   return events[dateKey] ?? [];
@@ -49,7 +49,7 @@ List<Task> tasksForDay(TasksForDayRef ref, DateTime day) {
 
 // 今日のスケジュール（AI生成）を提供する Provider
 @riverpod
-DailySchedule? todaySchedule(TodayScheduleRef ref) {
+DailySchedule? todaySchedule(Ref ref) {
   return null;
 }
 

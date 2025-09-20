@@ -50,12 +50,12 @@ class TaskColumn extends StatelessWidget {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: candidateItems.isNotEmpty
-                      ? color.withOpacity(0.1)
+                      ? color.withValues(alpha: 0.1)
                       : Colors.grey[50],
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
                     color: candidateItems.isNotEmpty
-                        ? color.withOpacity(0.5)
+                        ? color.withValues(alpha: 0.5)
                         : Colors.grey[300]!,
                     width: candidateItems.isNotEmpty ? 2 : 1,
                   ),
@@ -75,9 +75,9 @@ class TaskColumn extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

@@ -6,217 +6,277 @@ part of 'calendar_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$calendarEventsHash() => r'ef13c88f8f465e9270540a61f393f0d72ce424fc';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [calendarEvents].
-@ProviderFor(calendarEvents)
-final calendarEventsProvider =
-    AutoDisposeProvider<Map<DateTime, List<Task>>>.internal(
-  calendarEvents,
-  name: r'calendarEventsProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$calendarEventsHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+@ProviderFor(SelectedDay)
+const selectedDayProvider = SelectedDayProvider._();
 
-typedef CalendarEventsRef = AutoDisposeProviderRef<Map<DateTime, List<Task>>>;
-String _$tasksForDayHash() => r'3e7753ca37047a104ae5328d9abda6f93af05038';
-
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-/// See also [tasksForDay].
-@ProviderFor(tasksForDay)
-const tasksForDayProvider = TasksForDayFamily();
-
-/// See also [tasksForDay].
-class TasksForDayFamily extends Family<List<Task>> {
-  /// See also [tasksForDay].
-  const TasksForDayFamily();
-
-  /// See also [tasksForDay].
-  TasksForDayProvider call(
-    DateTime day,
-  ) {
-    return TasksForDayProvider(
-      day,
-    );
-  }
-
-  @override
-  TasksForDayProvider getProviderOverride(
-    covariant TasksForDayProvider provider,
-  ) {
-    return call(
-      provider.day,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'tasksForDayProvider';
-}
-
-/// See also [tasksForDay].
-class TasksForDayProvider extends AutoDisposeProvider<List<Task>> {
-  /// See also [tasksForDay].
-  TasksForDayProvider(
-    DateTime day,
-  ) : this._internal(
-          (ref) => tasksForDay(
-            ref as TasksForDayRef,
-            day,
-          ),
-          from: tasksForDayProvider,
-          name: r'tasksForDayProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$tasksForDayHash,
-          dependencies: TasksForDayFamily._dependencies,
-          allTransitiveDependencies:
-              TasksForDayFamily._allTransitiveDependencies,
-          day: day,
-        );
-
-  TasksForDayProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.day,
-  }) : super.internal();
-
-  final DateTime day;
-
-  @override
-  Override overrideWith(
-    List<Task> Function(TasksForDayRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: TasksForDayProvider._internal(
-        (ref) => create(ref as TasksForDayRef),
-        from: from,
-        name: null,
+final class SelectedDayProvider
+    extends $NotifierProvider<SelectedDay, DateTime> {
+  const SelectedDayProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'selectedDayProvider',
+        isAutoDispose: true,
         dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        day: day,
-      ),
-    );
-  }
+        $allTransitiveDependencies: null,
+      );
 
   @override
-  AutoDisposeProviderElement<List<Task>> createElement() {
-    return _TasksForDayProviderElement(this);
+  String debugGetCreateSourceHash() => _$selectedDayHash();
+
+  @$internal
+  @override
+  SelectedDay create() => SelectedDay();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(DateTime value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<DateTime>(value),
+    );
+  }
+}
+
+String _$selectedDayHash() => r'78d02c1ad7f06ab41297b5152760a1d09d3eeb23';
+
+abstract class _$SelectedDay extends $Notifier<DateTime> {
+  DateTime build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<DateTime, DateTime>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<DateTime, DateTime>,
+              DateTime,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}
+
+@ProviderFor(calendarEvents)
+const calendarEventsProvider = CalendarEventsProvider._();
+
+final class CalendarEventsProvider
+    extends
+        $FunctionalProvider<
+          Map<DateTime, List<Task>>,
+          Map<DateTime, List<Task>>,
+          Map<DateTime, List<Task>>
+        >
+    with $Provider<Map<DateTime, List<Task>>> {
+  const CalendarEventsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'calendarEventsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$calendarEventsHash();
+
+  @$internal
+  @override
+  $ProviderElement<Map<DateTime, List<Task>>> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  Map<DateTime, List<Task>> create(Ref ref) {
+    return calendarEvents(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Map<DateTime, List<Task>> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<Map<DateTime, List<Task>>>(value),
+    );
+  }
+}
+
+String _$calendarEventsHash() => r'2ebdd9fd12d7c0066d8f6db77f9b4e52d4667a79';
+
+@ProviderFor(tasksForDay)
+const tasksForDayProvider = TasksForDayFamily._();
+
+final class TasksForDayProvider
+    extends $FunctionalProvider<List<Task>, List<Task>, List<Task>>
+    with $Provider<List<Task>> {
+  const TasksForDayProvider._({
+    required TasksForDayFamily super.from,
+    required DateTime super.argument,
+  }) : super(
+         retry: null,
+         name: r'tasksForDayProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$tasksForDayHash();
+
+  @override
+  String toString() {
+    return r'tasksForDayProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $ProviderElement<List<Task>> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  List<Task> create(Ref ref) {
+    final argument = this.argument as DateTime;
+    return tasksForDay(ref, argument);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(List<Task> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<List<Task>>(value),
+    );
   }
 
   @override
   bool operator ==(Object other) {
-    return other is TasksForDayProvider && other.day == day;
+    return other is TasksForDayProvider && other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, day.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-mixin TasksForDayRef on AutoDisposeProviderRef<List<Task>> {
-  /// The parameter `day` of this provider.
-  DateTime get day;
-}
+String _$tasksForDayHash() => r'81306449418860a86f85309009efd452575628e2';
 
-class _TasksForDayProviderElement extends AutoDisposeProviderElement<List<Task>>
-    with TasksForDayRef {
-  _TasksForDayProviderElement(super.provider);
+final class TasksForDayFamily extends $Family
+    with $FunctionalFamilyOverride<List<Task>, DateTime> {
+  const TasksForDayFamily._()
+    : super(
+        retry: null,
+        name: r'tasksForDayProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  TasksForDayProvider call(DateTime day) =>
+      TasksForDayProvider._(argument: day, from: this);
 
   @override
-  DateTime get day => (origin as TasksForDayProvider).day;
+  String toString() => r'tasksForDayProvider';
 }
 
-String _$todayScheduleHash() => r'a5474aa5c81227c7c703f18c2d2e4ae8a6246c10';
-
-/// See also [todaySchedule].
 @ProviderFor(todaySchedule)
-final todayScheduleProvider = AutoDisposeProvider<DailySchedule?>.internal(
-  todaySchedule,
-  name: r'todayScheduleProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$todayScheduleHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const todayScheduleProvider = TodayScheduleProvider._();
 
-typedef TodayScheduleRef = AutoDisposeProviderRef<DailySchedule?>;
-String _$selectedDayHash() => r'78d02c1ad7f06ab41297b5152760a1d09d3eeb23';
+final class TodayScheduleProvider
+    extends $FunctionalProvider<DailySchedule?, DailySchedule?, DailySchedule?>
+    with $Provider<DailySchedule?> {
+  const TodayScheduleProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'todayScheduleProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
-/// See also [SelectedDay].
-@ProviderFor(SelectedDay)
-final selectedDayProvider =
-    AutoDisposeNotifierProvider<SelectedDay, DateTime>.internal(
-  SelectedDay.new,
-  name: r'selectedDayProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$selectedDayHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+  @override
+  String debugGetCreateSourceHash() => _$todayScheduleHash();
 
-typedef _$SelectedDay = AutoDisposeNotifier<DateTime>;
+  @$internal
+  @override
+  $ProviderElement<DailySchedule?> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  DailySchedule? create(Ref ref) {
+    return todaySchedule(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(DailySchedule? value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<DailySchedule?>(value),
+    );
+  }
+}
+
+String _$todayScheduleHash() => r'5dd35b816cfbecd38cd5b1cb191f45f206b56f26';
+
+@ProviderFor(CombinedTodaySchedule)
+const combinedTodayScheduleProvider = CombinedTodayScheduleProvider._();
+
+final class CombinedTodayScheduleProvider
+    extends $NotifierProvider<CombinedTodaySchedule, List<dynamic>> {
+  const CombinedTodayScheduleProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'combinedTodayScheduleProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$combinedTodayScheduleHash();
+
+  @$internal
+  @override
+  CombinedTodaySchedule create() => CombinedTodaySchedule();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(List<dynamic> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<List<dynamic>>(value),
+    );
+  }
+}
+
 String _$combinedTodayScheduleHash() =>
     r'68a470c340693009abec8f1e355362a8b6b5143d';
 
-/// See also [CombinedTodaySchedule].
-@ProviderFor(CombinedTodaySchedule)
-final combinedTodayScheduleProvider =
-    AutoDisposeNotifierProvider<CombinedTodaySchedule, List<dynamic>>.internal(
-  CombinedTodaySchedule.new,
-  name: r'combinedTodayScheduleProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$combinedTodayScheduleHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$CombinedTodaySchedule = AutoDisposeNotifier<List<dynamic>>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+abstract class _$CombinedTodaySchedule extends $Notifier<List<dynamic>> {
+  List<dynamic> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<List<dynamic>, List<dynamic>>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<List<dynamic>, List<dynamic>>,
+              List<dynamic>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

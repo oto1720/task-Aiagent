@@ -6,229 +6,292 @@ part of 'personal_schedule_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$personalScheduleRepositoryHash() =>
-    r'e8c10c712d09d4a56c8cdb0254c9c9aac07cbb08';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [personalScheduleRepository].
 @ProviderFor(personalScheduleRepository)
-final personalScheduleRepositoryProvider =
-    AutoDisposeProvider<PersonalScheduleRepository>.internal(
-  personalScheduleRepository,
-  name: r'personalScheduleRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$personalScheduleRepositoryHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const personalScheduleRepositoryProvider =
+    PersonalScheduleRepositoryProvider._();
 
-typedef PersonalScheduleRepositoryRef
-    = AutoDisposeProviderRef<PersonalScheduleRepository>;
-String _$personalScheduleEventsHash() =>
-    r'431c3c6191cac946b81d04989eeac764053aa2ec';
-
-/// See also [personalScheduleEvents].
-@ProviderFor(personalScheduleEvents)
-final personalScheduleEventsProvider =
-    AutoDisposeProvider<Map<DateTime, List<PersonalSchedule>>>.internal(
-  personalScheduleEvents,
-  name: r'personalScheduleEventsProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$personalScheduleEventsHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef PersonalScheduleEventsRef
-    = AutoDisposeProviderRef<Map<DateTime, List<PersonalSchedule>>>;
-String _$personalSchedulesForDayHash() =>
-    r'cc3167bfd18766d1bfee9163c117b3d6bce483b0';
-
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-/// See also [personalSchedulesForDay].
-@ProviderFor(personalSchedulesForDay)
-const personalSchedulesForDayProvider = PersonalSchedulesForDayFamily();
-
-/// See also [personalSchedulesForDay].
-class PersonalSchedulesForDayFamily extends Family<List<PersonalSchedule>> {
-  /// See also [personalSchedulesForDay].
-  const PersonalSchedulesForDayFamily();
-
-  /// See also [personalSchedulesForDay].
-  PersonalSchedulesForDayProvider call(
-    DateTime day,
-  ) {
-    return PersonalSchedulesForDayProvider(
-      day,
-    );
-  }
-
-  @override
-  PersonalSchedulesForDayProvider getProviderOverride(
-    covariant PersonalSchedulesForDayProvider provider,
-  ) {
-    return call(
-      provider.day,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'personalSchedulesForDayProvider';
-}
-
-/// See also [personalSchedulesForDay].
-class PersonalSchedulesForDayProvider
-    extends AutoDisposeProvider<List<PersonalSchedule>> {
-  /// See also [personalSchedulesForDay].
-  PersonalSchedulesForDayProvider(
-    DateTime day,
-  ) : this._internal(
-          (ref) => personalSchedulesForDay(
-            ref as PersonalSchedulesForDayRef,
-            day,
-          ),
-          from: personalSchedulesForDayProvider,
-          name: r'personalSchedulesForDayProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$personalSchedulesForDayHash,
-          dependencies: PersonalSchedulesForDayFamily._dependencies,
-          allTransitiveDependencies:
-              PersonalSchedulesForDayFamily._allTransitiveDependencies,
-          day: day,
-        );
-
-  PersonalSchedulesForDayProvider._internal(
-    super._createNotifier, {
-    required super.name,
-    required super.dependencies,
-    required super.allTransitiveDependencies,
-    required super.debugGetCreateSourceHash,
-    required super.from,
-    required this.day,
-  }) : super.internal();
-
-  final DateTime day;
-
-  @override
-  Override overrideWith(
-    List<PersonalSchedule> Function(PersonalSchedulesForDayRef provider) create,
-  ) {
-    return ProviderOverride(
-      origin: this,
-      override: PersonalSchedulesForDayProvider._internal(
-        (ref) => create(ref as PersonalSchedulesForDayRef),
-        from: from,
-        name: null,
+final class PersonalScheduleRepositoryProvider
+    extends
+        $FunctionalProvider<
+          PersonalScheduleRepository,
+          PersonalScheduleRepository,
+          PersonalScheduleRepository
+        >
+    with $Provider<PersonalScheduleRepository> {
+  const PersonalScheduleRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'personalScheduleRepositoryProvider',
+        isAutoDispose: true,
         dependencies: null,
-        allTransitiveDependencies: null,
-        debugGetCreateSourceHash: null,
-        day: day,
-      ),
-    );
-  }
+        $allTransitiveDependencies: null,
+      );
 
   @override
-  AutoDisposeProviderElement<List<PersonalSchedule>> createElement() {
-    return _PersonalSchedulesForDayProviderElement(this);
+  String debugGetCreateSourceHash() => _$personalScheduleRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<PersonalScheduleRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  PersonalScheduleRepository create(Ref ref) {
+    return personalScheduleRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(PersonalScheduleRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<PersonalScheduleRepository>(value),
+    );
+  }
+}
+
+String _$personalScheduleRepositoryHash() =>
+    r'641f62b475a49a2d8afb32cae2c1f904f122c25a';
+
+@ProviderFor(PersonalScheduleList)
+const personalScheduleListProvider = PersonalScheduleListProvider._();
+
+final class PersonalScheduleListProvider
+    extends $NotifierProvider<PersonalScheduleList, List<PersonalSchedule>> {
+  const PersonalScheduleListProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'personalScheduleListProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$personalScheduleListHash();
+
+  @$internal
+  @override
+  PersonalScheduleList create() => PersonalScheduleList();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(List<PersonalSchedule> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<List<PersonalSchedule>>(value),
+    );
+  }
+}
+
+String _$personalScheduleListHash() =>
+    r'4b08a96cefc7466051c9953ed2bc0f186af2e03d';
+
+abstract class _$PersonalScheduleList
+    extends $Notifier<List<PersonalSchedule>> {
+  List<PersonalSchedule> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref =
+        this.ref as $Ref<List<PersonalSchedule>, List<PersonalSchedule>>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<List<PersonalSchedule>, List<PersonalSchedule>>,
+              List<PersonalSchedule>,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}
+
+@ProviderFor(personalScheduleEvents)
+const personalScheduleEventsProvider = PersonalScheduleEventsProvider._();
+
+final class PersonalScheduleEventsProvider
+    extends
+        $FunctionalProvider<
+          Map<DateTime, List<PersonalSchedule>>,
+          Map<DateTime, List<PersonalSchedule>>,
+          Map<DateTime, List<PersonalSchedule>>
+        >
+    with $Provider<Map<DateTime, List<PersonalSchedule>>> {
+  const PersonalScheduleEventsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'personalScheduleEventsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$personalScheduleEventsHash();
+
+  @$internal
+  @override
+  $ProviderElement<Map<DateTime, List<PersonalSchedule>>> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  Map<DateTime, List<PersonalSchedule>> create(Ref ref) {
+    return personalScheduleEvents(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(Map<DateTime, List<PersonalSchedule>> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride:
+          $SyncValueProvider<Map<DateTime, List<PersonalSchedule>>>(value),
+    );
+  }
+}
+
+String _$personalScheduleEventsHash() =>
+    r'ab3d20a19bb2fe74b9f7a630a4598b24d65e9f03';
+
+@ProviderFor(personalSchedulesForDay)
+const personalSchedulesForDayProvider = PersonalSchedulesForDayFamily._();
+
+final class PersonalSchedulesForDayProvider
+    extends
+        $FunctionalProvider<
+          List<PersonalSchedule>,
+          List<PersonalSchedule>,
+          List<PersonalSchedule>
+        >
+    with $Provider<List<PersonalSchedule>> {
+  const PersonalSchedulesForDayProvider._({
+    required PersonalSchedulesForDayFamily super.from,
+    required DateTime super.argument,
+  }) : super(
+         retry: null,
+         name: r'personalSchedulesForDayProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$personalSchedulesForDayHash();
+
+  @override
+  String toString() {
+    return r'personalSchedulesForDayProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $ProviderElement<List<PersonalSchedule>> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  List<PersonalSchedule> create(Ref ref) {
+    final argument = this.argument as DateTime;
+    return personalSchedulesForDay(ref, argument);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(List<PersonalSchedule> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<List<PersonalSchedule>>(value),
+    );
   }
 
   @override
   bool operator ==(Object other) {
-    return other is PersonalSchedulesForDayProvider && other.day == day;
+    return other is PersonalSchedulesForDayProvider &&
+        other.argument == argument;
   }
 
   @override
   int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, day.hashCode);
-
-    return _SystemHash.finish(hash);
+    return argument.hashCode;
   }
 }
 
-mixin PersonalSchedulesForDayRef
-    on AutoDisposeProviderRef<List<PersonalSchedule>> {
-  /// The parameter `day` of this provider.
-  DateTime get day;
-}
+String _$personalSchedulesForDayHash() =>
+    r'f9ff3accfd3509130f01eb43e6ef32fa63a9b453';
 
-class _PersonalSchedulesForDayProviderElement
-    extends AutoDisposeProviderElement<List<PersonalSchedule>>
-    with PersonalSchedulesForDayRef {
-  _PersonalSchedulesForDayProviderElement(super.provider);
+final class PersonalSchedulesForDayFamily extends $Family
+    with $FunctionalFamilyOverride<List<PersonalSchedule>, DateTime> {
+  const PersonalSchedulesForDayFamily._()
+    : super(
+        retry: null,
+        name: r'personalSchedulesForDayProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  PersonalSchedulesForDayProvider call(DateTime day) =>
+      PersonalSchedulesForDayProvider._(argument: day, from: this);
 
   @override
-  DateTime get day => (origin as PersonalSchedulesForDayProvider).day;
+  String toString() => r'personalSchedulesForDayProvider';
+}
+
+@ProviderFor(todayPersonalSchedules)
+const todayPersonalSchedulesProvider = TodayPersonalSchedulesProvider._();
+
+final class TodayPersonalSchedulesProvider
+    extends
+        $FunctionalProvider<
+          List<PersonalSchedule>,
+          List<PersonalSchedule>,
+          List<PersonalSchedule>
+        >
+    with $Provider<List<PersonalSchedule>> {
+  const TodayPersonalSchedulesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'todayPersonalSchedulesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$todayPersonalSchedulesHash();
+
+  @$internal
+  @override
+  $ProviderElement<List<PersonalSchedule>> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  List<PersonalSchedule> create(Ref ref) {
+    return todayPersonalSchedules(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(List<PersonalSchedule> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<List<PersonalSchedule>>(value),
+    );
+  }
 }
 
 String _$todayPersonalSchedulesHash() =>
-    r'6063784680519dfe2c9f4d970c7cde7738004979';
-
-/// See also [todayPersonalSchedules].
-@ProviderFor(todayPersonalSchedules)
-final todayPersonalSchedulesProvider =
-    AutoDisposeProvider<List<PersonalSchedule>>.internal(
-  todayPersonalSchedules,
-  name: r'todayPersonalSchedulesProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$todayPersonalSchedulesHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef TodayPersonalSchedulesRef
-    = AutoDisposeProviderRef<List<PersonalSchedule>>;
-String _$personalScheduleListHash() =>
-    r'4b08a96cefc7466051c9953ed2bc0f186af2e03d';
-
-/// See also [PersonalScheduleList].
-@ProviderFor(PersonalScheduleList)
-final personalScheduleListProvider = AutoDisposeNotifierProvider<
-    PersonalScheduleList, List<PersonalSchedule>>.internal(
-  PersonalScheduleList.new,
-  name: r'personalScheduleListProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$personalScheduleListHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$PersonalScheduleList = AutoDisposeNotifier<List<PersonalSchedule>>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+    r'876c0cbfce476d680b6f53a4634ded008bdfd02a';
