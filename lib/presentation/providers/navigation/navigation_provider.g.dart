@@ -6,22 +6,59 @@ part of 'navigation_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$navigationNotifierHash() =>
-    r'5cd9f5900b81da6f1aa1ee22128168171c960bd4';
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
 
-/// See also [NavigationNotifier].
 @ProviderFor(NavigationNotifier)
-final navigationNotifierProvider =
-    AutoDisposeNotifierProvider<NavigationNotifier, NavigationState>.internal(
-  NavigationNotifier.new,
-  name: r'navigationNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$navigationNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+const navigationProvider = NavigationNotifierProvider._();
 
-typedef _$NavigationNotifier = AutoDisposeNotifier<NavigationState>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
+final class NavigationNotifierProvider
+    extends $NotifierProvider<NavigationNotifier, NavigationState> {
+  const NavigationNotifierProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'navigationProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$navigationNotifierHash();
+
+  @$internal
+  @override
+  NavigationNotifier create() => NavigationNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(NavigationState value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<NavigationState>(value),
+    );
+  }
+}
+
+String _$navigationNotifierHash() =>
+    r'4561aae30a0da87c712e6636e3cc33b6508e3c81';
+
+abstract class _$NavigationNotifier extends $Notifier<NavigationState> {
+  NavigationState build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final created = build();
+    final ref = this.ref as $Ref<NavigationState, NavigationState>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<NavigationState, NavigationState>,
+              NavigationState,
+              Object?,
+              Object?
+            >;
+    element.handleValue(ref, created);
+  }
+}

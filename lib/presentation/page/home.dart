@@ -13,7 +13,7 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final taskStats = ref.watch(taskStatsProvider);
-    final todaySchedule = ref.watch(todayScheduleProvider);
+    final todaySchedule = ref.watch(scheduleProvider);
     final pendingTasks = ref.watch(pendingTasksProvider);
 
     return SingleChildScrollView(
@@ -317,7 +317,7 @@ class HomeScreen extends ConsumerWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: priorityColor.withOpacity(0.1),
+              color: priorityColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
@@ -467,7 +467,7 @@ class HomeScreen extends ConsumerWidget {
     );
 
     try {
-      await ref.read(todayScheduleProvider.notifier).generateTodaySchedule();
+      await ref.read(scheduleProvider.notifier).generateTodaySchedule();
       Navigator.of(context).pop();
       
       ScaffoldMessenger.of(context).showSnackBar(

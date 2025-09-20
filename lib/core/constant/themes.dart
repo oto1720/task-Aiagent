@@ -18,13 +18,11 @@ class AppThemes{
     colorScheme: ColorScheme.light(
       primary: primaryColor,
       secondary: secondaryColor,
-      background: backgroundColor,
+      surface: Colors.white,
       onPrimary: Colors.white,
       onSecondary: Colors.white,
-      onBackground: Colors.black,
       onSurface: Colors.black,
       onError: Colors.white,
-      surface: Colors.white,
       error: Colors.red,
 
     ),
