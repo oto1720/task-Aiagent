@@ -28,6 +28,8 @@ class TaskFormattingUseCase {
   // 優先度のラベルを取得
   String getPriorityLabel(TaskPriority priority) {
     switch (priority) {
+      case TaskPriority.urgent:
+        return '緊急';
       case TaskPriority.high:
         return '高';
       case TaskPriority.medium:
@@ -40,6 +42,11 @@ class TaskFormattingUseCase {
   // 優先度のアイコンと色を取得
   PriorityIndicatorData getPriorityIndicatorData(TaskPriority priority) {
     switch (priority) {
+      case TaskPriority.urgent:
+        return PriorityIndicatorData(
+          color: Colors.deepPurple,
+          icon: Icons.priority_high,
+        );
       case TaskPriority.high:
         return PriorityIndicatorData(
           color: Colors.red,

@@ -2,10 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:task_aiagent/presentation/providers/task_provider.dart';
+import 'package:task_aiagent/presentation/providers/task_providers.dart';
 import 'package:task_aiagent/domain/entities/schedule.dart';
 import 'package:task_aiagent/domain/entities/task.dart';
 import 'package:go_router/go_router.dart';
+import 'package:task_aiagent/presentation/providers/schedule_providers.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -13,8 +14,8 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final taskStats = ref.watch(taskStatsProvider);
-    final todaySchedule = ref.watch(scheduleProvider);
-    final pendingTasks = ref.watch(pendingTasksProvider);
+    final todayScheduleAsync = ref.watch(todayScheduleProvider);
+    final pendingTasks = ref.watch(activeTasksProvider);
 
     return SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -34,7 +35,11 @@ class HomeScreen extends ConsumerWidget {
             const SizedBox(height: 20),
 
             // 今日のスケジュール
-            _buildTodaySchedule(context, todaySchedule),
+            todayScheduleAsync.when(
+              data: (todaySchedule) => _buildTodaySchedule(context, todaySchedule),
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (error, stack) => Center(child: Text('エラー: $error')),
+            ),
             const SizedBox(height: 20),
 
             // 近日中のタスク
@@ -267,6 +272,9 @@ class HomeScreen extends ConsumerWidget {
       case TaskPriority.low:
         priorityColor = Colors.green;
         break;
+      case TaskPriority.urgent:
+        priorityColor = Colors.red;
+        break;
     }
 
     return Container(
@@ -342,6 +350,8 @@ class HomeScreen extends ConsumerWidget {
         return '中';
       case TaskPriority.low:
         return '低';
+      case TaskPriority.urgent:
+        return '緊急';
     }
   }
 
@@ -410,7 +420,7 @@ class HomeScreen extends ConsumerWidget {
       child: ListTile(
         leading: Checkbox(
           value: task.status == TaskStatus.completed,
-          onChanged: (_) => ref.read(taskListProvider.notifier).toggleTaskStatus(task.id),
+          onChanged: (_) => ref.read(taskListProvider.notifier).completeTask(task.id),
         ),
         title: Text(
           task.title,
@@ -442,6 +452,8 @@ class HomeScreen extends ConsumerWidget {
         return Colors.orange;
       case TaskPriority.low:
         return Colors.green;
+      case TaskPriority.urgent:
+        return Colors.red;
     }
   }
 
@@ -467,7 +479,7 @@ class HomeScreen extends ConsumerWidget {
     );
 
     try {
-      await ref.read(scheduleProvider.notifier).generateTodaySchedule();
+      await ref.read(todayScheduleProvider.notifier).generateTodaySchedule();
       Navigator.of(context).pop();
       
       ScaffoldMessenger.of(context).showSnackBar(

@@ -2,9 +2,17 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:task_aiagent/domain/entities/personal_schedule.dart';
 import 'package:task_aiagent/domain/repositories/personal_schedule_repository.dart';
 import 'package:task_aiagent/data/repositories/personal_schedule_repository_impl.dart';
-import 'package:task_aiagent/presentation/providers/task_provider.dart';
+import 'package:task_aiagent/data/datasources/local/local_storage_service.dart';
 
 part 'personal_schedule_provider.g.dart';
+
+// LocalStorageServiceのプロバイダー
+@riverpod
+LocalStorageService localStorageService(Ref ref) {
+  final service = LocalStorageService();
+  service.init();
+  return service;
+}
 
 // PersonalScheduleRepositoryのプロバイダー
 @riverpod
