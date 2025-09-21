@@ -1,10 +1,11 @@
 // lib/domain/entities/task.dart
 import 'package:uuid/uuid.dart';
 //優先度
-enum TaskPriority { 
-    low, 
-    medium, 
-    high 
+enum TaskPriority {
+    low,
+    medium,
+    high,
+    urgent
   }
 
 enum TaskStatus {
@@ -22,6 +23,7 @@ class Task {
   final TaskStatus status;      // 現在のステータス
   final int estimatedMinutes;   // 推定所要時間（分）
   final DateTime createdAt;     // 作成日時
+  final DateTime? updatedAt;    // 更新日時
   final DateTime? scheduledAt;  // スケジュール予定日時
   final DateTime? dueDate;      // 期日
   final int? sortOrder;         // ドラッグ&ドロップ用の並び順
@@ -36,6 +38,7 @@ class Task {
     this.status = TaskStatus.upcoming,
     required this.estimatedMinutes,
     DateTime? createdAt,
+    this.updatedAt,
     this.scheduledAt,
     this.dueDate,
     this.sortOrder,
@@ -52,6 +55,7 @@ class Task {
     TaskStatus? status,
     int? estimatedMinutes,
     DateTime? createdAt,
+    DateTime? updatedAt,
     DateTime? scheduledAt,
     DateTime? dueDate,
     int? sortOrder,
@@ -66,6 +70,7 @@ class Task {
       status: status ?? this.status,
       estimatedMinutes: estimatedMinutes ?? this.estimatedMinutes,
       createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
       scheduledAt: scheduledAt ?? this.scheduledAt,
       dueDate: dueDate ?? this.dueDate,
       sortOrder: sortOrder ?? this.sortOrder,
@@ -83,6 +88,7 @@ class Task {
       'status': status.index,
       'estimatedMinutes': estimatedMinutes,
       'createdAt': createdAt.millisecondsSinceEpoch,
+      'updatedAt': updatedAt?.millisecondsSinceEpoch,
       'scheduledAt': scheduledAt?.millisecondsSinceEpoch,
       'dueDate': dueDate?.millisecondsSinceEpoch,
       'sortOrder': sortOrder,
@@ -100,6 +106,9 @@ class Task {
       status: TaskStatus.values[json['status']],
       estimatedMinutes: json['estimatedMinutes'],
       createdAt: DateTime.fromMillisecondsSinceEpoch(json['createdAt']),
+      updatedAt: json['updatedAt'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(json['updatedAt'])
+          : null,
       scheduledAt: json['scheduledAt'] != null
           ? DateTime.fromMillisecondsSinceEpoch(json['scheduledAt'])
           : null,
@@ -115,12 +124,14 @@ class Task {
   // 優先度に基づく並び順を取得
   int get priorityOrder {
     switch (priority) {
-      case TaskPriority.high:
+      case TaskPriority.urgent:
         return 0;
-      case TaskPriority.medium:
+      case TaskPriority.high:
         return 1;
-      case TaskPriority.low:
+      case TaskPriority.medium:
         return 2;
+      case TaskPriority.low:
+        return 3;
     }
   }
 

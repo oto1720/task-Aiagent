@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:task_aiagent/presentation/providers/task_provider.dart';
+import 'package:task_aiagent/presentation/providers/task_providers.dart';
 import 'package:task_aiagent/domain/entities/task.dart';
 import 'package:task_aiagent/domain/usecases/task/task_management_usecase.dart';
 import 'package:task_aiagent/presentation/widgets/task/task_board.dart';
@@ -28,38 +28,44 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final tasks = ref.watch(taskListProvider);
+    final tasksAsync = ref.watch(taskListProvider);
     final taskStats = ref.watch(taskStatsProvider);
 
-    final filteredTasks = _taskManagement.filterTasks(tasks, _searchQuery);
-    final upcomingTasks = _taskManagement.getUpcomingTasks(filteredTasks);
-    final inProgressTasks = _taskManagement.getInProgressTasks(filteredTasks);
-    final completedTasks = _taskManagement.getCompletedTasks(filteredTasks);
+    return tasksAsync.when(
+      data: (tasks) {
+        final filteredTasks = _taskManagement.filterTasks(tasks, _searchQuery);
+        final upcomingTasks = _taskManagement.getUpcomingTasks(filteredTasks);
+        final inProgressTasks = _taskManagement.getInProgressTasks(filteredTasks);
+        final completedTasks = _taskManagement.getCompletedTasks(filteredTasks);
 
-    return Column(
-        children: [
-          // 統計カード
-          TaskStatsCard(stats: taskStats),
+        return Column(
+          children: [
+            // 統計カード
+            TaskStatsCard(stats: taskStats),
 
-          // 検索バー
-          _buildSearchBar(),
+            // 検索バー
+            _buildSearchBar(),
 
-          // Kanbanボード
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TaskBoard(
-                upcomingTasks: upcomingTasks,
-                inProgressTasks: inProgressTasks,
-                completedTasks: completedTasks,
-                onTaskStatusChanged: _handleTaskStatusChanged,
-                onTaskEdit: _handleTaskEdit,
-                onTaskDelete: _handleTaskDelete,
+            // Kanbanボード
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TaskBoard(
+                  upcomingTasks: upcomingTasks,
+                  inProgressTasks: inProgressTasks,
+                  completedTasks: completedTasks,
+                  onTaskStatusChanged: _handleTaskStatusChanged,
+                  onTaskEdit: _handleTaskEdit,
+                  onTaskDelete: _handleTaskDelete,
+                ),
               ),
             ),
-          ),
-        ],
-      );
+          ],
+        );
+      },
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, stack) => Center(child: Text('エラー: $error')),
+    );
   }
 
   // PreferredSizeWidget _buildAppBar() {

@@ -107,7 +107,7 @@ final class CalendarEventsProvider
   }
 }
 
-String _$calendarEventsHash() => r'2ebdd9fd12d7c0066d8f6db77f9b4e52d4667a79';
+String _$calendarEventsHash() => r'e1162cece9fd1013f05b49ca3dbfbad0471ce873';
 
 @ProviderFor(tasksForDay)
 const tasksForDayProvider = TasksForDayFamily._();

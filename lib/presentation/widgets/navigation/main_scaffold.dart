@@ -5,7 +5,7 @@ import 'package:task_aiagent/domain/entities/navigation/tab_item.dart';
 import 'package:task_aiagent/presentation/providers/navigation/navigation_provider.dart';
 import 'package:task_aiagent/presentation/widgets/navigation/bottom_navigation_bar_widget.dart';
 import 'package:task_aiagent/presentation/providers/calendar_provider.dart';
-import 'package:task_aiagent/presentation/providers/task_provider.dart';
+import 'package:task_aiagent/presentation/providers/task_providers.dart';
 import 'package:task_aiagent/presentation/widgets/task/task_form_dialog.dart';
 
 class MainScaffold extends ConsumerWidget{
@@ -65,7 +65,13 @@ class MainScaffold extends ConsumerWidget{
       builder: (context) => TaskFormDialog(
         initialDueDate: initialDate,
         onSave: (task) {
-          ref.read(taskListProvider.notifier).addTask(task);
+          ref.read(taskListProvider.notifier).createTask(
+            title: task.title,
+            description: task.description,
+            estimatedMinutes: task.estimatedMinutes,
+            priority: task.priority,
+            dueDate: task.dueDate,
+          );
         },
       ),
     );

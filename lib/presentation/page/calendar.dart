@@ -8,7 +8,7 @@ import 'package:task_aiagent/domain/entities/schedule.dart';
 import 'package:task_aiagent/domain/entities/task.dart';
 import 'package:task_aiagent/domain/entities/personal_schedule.dart';
 import 'package:task_aiagent/presentation/providers/calendar_provider.dart';
-import 'package:task_aiagent/presentation/providers/task_provider.dart';
+import 'package:task_aiagent/presentation/providers/task_providers.dart';
 import 'package:task_aiagent/presentation/providers/personal_schedule_provider.dart';
 import 'package:task_aiagent/presentation/widgets/schedule/personal_schedule_form_dialog.dart';
 
@@ -164,7 +164,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
       child: ListTile(
         leading: Checkbox(
           value: task.status == TaskStatus.completed,
-          onChanged: (_) => ref.read(taskListProvider.notifier).toggleTaskStatus(task.id),
+          onChanged: (_) => ref.read(taskListProvider.notifier).completeTask(task.id),
         ),
         title: Text(
           task.title,
@@ -195,6 +195,8 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
         return Colors.orange;
       case TaskPriority.low:
         return Colors.green;
+      case TaskPriority.urgent:
+        return Colors.red;
     }
   }
 
@@ -323,6 +325,9 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
       case TaskPriority.low:
         priorityColor = Colors.green;
         break;
+      case TaskPriority.urgent:
+        priorityColor = Colors.red;
+        break;
     }
 
     return Container(
@@ -398,6 +403,8 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
         return '中';
       case TaskPriority.low:
         return '低';
+      case TaskPriority.urgent:
+        return '緊急';
     }
   }
 
