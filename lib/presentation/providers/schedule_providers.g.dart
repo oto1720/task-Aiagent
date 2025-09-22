@@ -132,7 +132,7 @@ final class TodayScheduleProvider
   TodaySchedule create() => TodaySchedule();
 }
 
-String _$todayScheduleHash() => r'cfbc25aba156161963312b44b56d458a5429a429';
+String _$todayScheduleHash() => r'beef958d8035104ad5cd87344ba07100587b452e';
 
 abstract class _$TodaySchedule extends $AsyncNotifier<DailySchedule?> {
   FutureOr<DailySchedule?> build();
