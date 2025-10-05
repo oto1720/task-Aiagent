@@ -11,6 +11,7 @@ import 'package:task_aiagent/presentation/providers/calendar_provider.dart';
 import 'package:task_aiagent/presentation/providers/task_providers.dart';
 import 'package:task_aiagent/presentation/providers/personal_schedule_provider.dart';
 import 'package:task_aiagent/presentation/widgets/schedule/personal_schedule_form_dialog.dart';
+import 'package:task_aiagent/core/constant/themes.dart';
 
 class CalendarScreen extends ConsumerStatefulWidget {
   const CalendarScreen({super.key});
@@ -189,14 +190,14 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
 
   Color _getPriorityColor(TaskPriority priority) {
     switch (priority) {
-      case TaskPriority.high:
-        return Colors.red;
-      case TaskPriority.medium:
-        return Colors.orange;
-      case TaskPriority.low:
-        return Colors.green;
       case TaskPriority.urgent:
-        return Colors.red;
+        return AppThemes.errorColor;
+      case TaskPriority.high:
+        return AppThemes.primaryOrange;
+      case TaskPriority.medium:
+        return AppThemes.lightOrange;
+      case TaskPriority.low:
+        return AppThemes.successColor;
     }
   }
 
@@ -313,84 +314,133 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
   Widget _buildScheduleBlock(ScheduleBlock block) {
     final startTime = DateFormat('HH:mm').format(block.startTime);
     final endTime = DateFormat('HH:mm').format(block.endTime);
-    
-    Color priorityColor;
-    switch (block.priority) {
-      case TaskPriority.high:
-        priorityColor = Colors.red;
-        break;
-      case TaskPriority.medium:
-        priorityColor = Colors.orange;
-        break;
-      case TaskPriority.low:
-        priorityColor = Colors.green;
-        break;
-      case TaskPriority.urgent:
-        priorityColor = Colors.red;
-        break;
-    }
+
+    final priorityColor = _getPriorityColor(block.priority);
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
-        border: Border(left: BorderSide(color: priorityColor, width: 4)),
-        color: Colors.grey[50],
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(8),
-          bottomRight: Radius.circular(8),
+        color: AppThemes.grey50,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: priorityColor.withValues(alpha: 0.3),
+          width: 1.5,
         ),
       ),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 80,
-            child: Text(
-              '$startTime\n$endTime',
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  block.taskTitle,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Text(
-                  '${block.durationInMinutes}分',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey[600],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: priorityColor.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Text(
-              _getPriorityText(block.priority),
-              style: TextStyle(
-                fontSize: 10,
+      child: IntrinsicHeight(
+        child: Row(
+          children: [
+            Container(
+              width: 5,
+              decoration: BoxDecoration(
                 color: priorityColor,
-                fontWeight: FontWeight.bold,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  bottomLeft: Radius.circular(12),
+                ),
               ),
             ),
-          ),
-        ],
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 70,
+                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
+                      decoration: BoxDecoration(
+                        color: priorityColor.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            startTime,
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: priorityColor,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Icon(
+                            Icons.arrow_downward_rounded,
+                            size: 12,
+                            color: priorityColor,
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            endTime,
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: priorityColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            block.taskTitle,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                              color: AppThemes.textColor,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.schedule_outlined,
+                                size: 14,
+                                color: AppThemes.secondaryTextColor,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                '${block.durationInMinutes}分',
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: AppThemes.secondaryTextColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: priorityColor.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: priorityColor.withValues(alpha: 0.3),
+                          width: 1,
+                        ),
+                      ),
+                      child: Text(
+                        _getPriorityText(block.priority),
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: priorityColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -415,12 +465,15 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
       decoration: BoxDecoration(
-        color: Colors.blue[50],
+        color: AppThemes.darkOrange.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12.0),
-        border: Border.all(color: Colors.blue[200]!, width: 1),
+        border: Border.all(
+          color: AppThemes.darkOrange.withValues(alpha: 0.3),
+          width: 1.5,
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: AppThemes.darkOrange.withValues(alpha: 0.05),
             spreadRadius: 1,
             blurRadius: 5,
             offset: const Offset(0, 2),
@@ -428,32 +481,55 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
         ],
       ),
       child: ListTile(
-        leading: const Icon(Icons.event, color: Colors.blue),
+        leading: Icon(Icons.event_rounded, color: AppThemes.darkOrange),
         title: Text(
           schedule.title,
-          style: const TextStyle(fontWeight: FontWeight.w600),
+          style: const TextStyle(
+            fontWeight: FontWeight.w600,
+            color: AppThemes.textColor,
+          ),
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('$startTime - $endTime (${schedule.durationInMinutes}分)'),
-            if (schedule.description != null && schedule.description!.isNotEmpty)
+            Row(
+              children: [
+                const Icon(
+                  Icons.schedule_outlined,
+                  size: 14,
+                  color: AppThemes.secondaryTextColor,
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  '$startTime - $endTime (${schedule.durationInMinutes}分)',
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: AppThemes.secondaryTextColor,
+                  ),
+                ),
+              ],
+            ),
+            if (schedule.description != null && schedule.description!.isNotEmpty) ...[
+              const SizedBox(height: 4),
               Text(
                 schedule.description!,
-                style: TextStyle(color: Colors.grey[600]),
+                style: const TextStyle(color: AppThemes.secondaryTextColor),
               ),
+            ],
           ],
         ),
         trailing: PopupMenuButton<String>(
           onSelected: (action) => _handleScheduleAction(action, schedule),
+          icon: Icon(Icons.more_vert, color: AppThemes.grey600),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           itemBuilder: (context) => [
-            const PopupMenuItem(
+            PopupMenuItem(
               value: 'edit',
               child: Row(
                 children: [
-                  Icon(Icons.edit, size: 18),
-                  SizedBox(width: 8),
-                  Text('編集'),
+                  Icon(Icons.edit_outlined, color: AppThemes.primaryOrange, size: 18),
+                  const SizedBox(width: 8),
+                  const Text('編集'),
                 ],
               ),
             ),
@@ -461,9 +537,9 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
               value: 'delete',
               child: Row(
                 children: [
-                  Icon(Icons.delete, size: 18, color: Colors.red),
+                  Icon(Icons.delete_outline, color: AppThemes.errorColor, size: 18),
                   SizedBox(width: 8),
-                  Text('削除', style: TextStyle(color: Colors.red)),
+                  Text('削除', style: TextStyle(color: AppThemes.errorColor)),
                 ],
               ),
             ),
@@ -478,74 +554,141 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
     final endTime = DateFormat('HH:mm').format(schedule.endTime);
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
-        border: const Border(left: BorderSide(color: Colors.blue, width: 4)),
-        color: Colors.blue[50],
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(8),
-          bottomRight: Radius.circular(8),
+        color: AppThemes.grey50,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: AppThemes.darkOrange.withValues(alpha: 0.3),
+          width: 1.5,
         ),
       ),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 80,
-            child: Text(
-              '$startTime\n$endTime',
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  schedule.title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
+      child: IntrinsicHeight(
+        child: Row(
+          children: [
+            Container(
+              width: 5,
+              decoration: BoxDecoration(
+                color: AppThemes.darkOrange,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  bottomLeft: Radius.circular(12),
                 ),
-                if (schedule.description != null && schedule.description!.isNotEmpty)
-                  Text(
-                    schedule.description!,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey[600],
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 70,
+                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
+                      decoration: BoxDecoration(
+                        color: AppThemes.darkOrange.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            startTime,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: AppThemes.darkOrange,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          const Icon(
+                            Icons.arrow_downward_rounded,
+                            size: 12,
+                            color: AppThemes.darkOrange,
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            endTime,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: AppThemes.darkOrange,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                Text(
-                  '${schedule.durationInMinutes}分',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey[600],
-                  ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            schedule.title,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                              color: AppThemes.textColor,
+                            ),
+                          ),
+                          if (schedule.description != null && schedule.description!.isNotEmpty) ...[
+                            const SizedBox(height: 4),
+                            Text(
+                              schedule.description!,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: AppThemes.secondaryTextColor,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.schedule_outlined,
+                                size: 14,
+                                color: AppThemes.secondaryTextColor,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                '${schedule.durationInMinutes}分',
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: AppThemes.secondaryTextColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: AppThemes.darkOrange.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: AppThemes.darkOrange.withValues(alpha: 0.3),
+                          width: 1,
+                        ),
+                      ),
+                      child: const Text(
+                        '個人',
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: AppThemes.darkOrange,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: Colors.blue.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: const Text(
-              '個人',
-              style: TextStyle(
-                fontSize: 10,
-                color: Colors.blue,
-                fontWeight: FontWeight.bold,
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

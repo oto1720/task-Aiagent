@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:task_aiagent/domain/entities/timer.dart' as timer_entity;
+import 'package:task_aiagent/core/constant/themes.dart';
 
 /// タイマータイプ選択ウィジェット
 class TimerTypeSelector extends StatelessWidget {
@@ -24,8 +25,8 @@ class TimerTypeSelector extends StatelessWidget {
           type: timer_entity.TimerType.pomodoro,
           label: 'ポモドーロ',
           subtitle: '25分',
-          icon: Icons.work_outline,
-          color: Theme.of(context).primaryColor,
+          icon: Icons.work_outline_rounded,
+          color: AppThemes.primaryOrange,
         ),
         _buildTypeButton(
           context,
@@ -33,7 +34,7 @@ class TimerTypeSelector extends StatelessWidget {
           label: '短い休憩',
           subtitle: '5分',
           icon: Icons.coffee_outlined,
-          color: Colors.green,
+          color: AppThemes.successColor,
         ),
         _buildTypeButton(
           context,
@@ -41,7 +42,7 @@ class TimerTypeSelector extends StatelessWidget {
           label: '長い休憩',
           subtitle: '15分',
           icon: Icons.free_breakfast_outlined,
-          color: Colors.blue,
+          color: AppThemes.darkOrange,
         ),
         _buildTypeButton(
           context,
@@ -49,7 +50,7 @@ class TimerTypeSelector extends StatelessWidget {
           label: 'カスタム',
           subtitle: '設定',
           icon: Icons.settings_outlined,
-          color: Colors.orange,
+          color: AppThemes.lightOrange,
         ),
       ],
     );
@@ -72,30 +73,48 @@ class TimerTypeSelector extends StatelessWidget {
           onTap: () => onTypeSelected(type),
           borderRadius: BorderRadius.circular(12),
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+            padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 8),
             decoration: BoxDecoration(
-              color: isSelected ? color.withValues(alpha: 0.1) : Colors.transparent,
+              color: isSelected ? color.withValues(alpha: 0.15) : AppThemes.grey50,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: isSelected ? color : Colors.grey[300]!,
-                width: isSelected ? 2 : 1,
+                color: isSelected ? color : AppThemes.grey300,
+                width: isSelected ? 2.5 : 1,
               ),
+              boxShadow: isSelected
+                  ? [
+                      BoxShadow(
+                        color: color.withValues(alpha: 0.2),
+                        blurRadius: 8,
+                        spreadRadius: 1,
+                      ),
+                    ]
+                  : null,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
-                  icon,
-                  color: isSelected ? color : Colors.grey[600],
-                  size: 28,
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: isSelected
+                        ? color.withValues(alpha: 0.15)
+                        : AppThemes.grey200,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Icon(
+                    icon,
+                    color: isSelected ? color : AppThemes.grey600,
+                    size: 24,
+                  ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 10),
                 Text(
                   label,
                   style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                    color: isSelected ? color : Colors.grey[800],
+                    fontSize: 11,
+                    fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
+                    color: isSelected ? color : AppThemes.textColor,
                   ),
                   textAlign: TextAlign.center,
                   maxLines: 2,
@@ -106,7 +125,10 @@ class TimerTypeSelector extends StatelessWidget {
                   subtitle,
                   style: TextStyle(
                     fontSize: 10,
-                    color: Colors.grey[600],
+                    color: isSelected
+                        ? color.withValues(alpha: 0.8)
+                        : AppThemes.secondaryTextColor,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
