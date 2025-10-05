@@ -4,6 +4,7 @@ import 'package:task_aiagent/presentation/page/home.dart';
 import 'package:task_aiagent/presentation/page/task.dart';
 import 'package:task_aiagent/presentation/page/calendar.dart';
 import 'package:task_aiagent/presentation/widgets/navigation/main_scaffold.dart';
+import 'package:task_aiagent/presentation/page/timer.dart';
 
 
 final GoRouter router = GoRouter(
@@ -38,15 +39,7 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: '/timer',
           builder: (BuildContext context, GoRouterState state) {
-            return const Scaffold(
-              body: Center(
-                child: Text(
-                  'タイマー画面\n実装予定',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 24),
-                ),
-              ),
-            );
+            return const TimerPage();
           },
         ),
       ],

@@ -9,8 +9,6 @@ import 'package:mockito/mockito.dart' as _i1;
 import 'package:task_aiagent/core/utils/result.dart' as _i2;
 import 'package:task_aiagent/domain/entities/task.dart' as _i5;
 import 'package:task_aiagent/domain/repositories/task_repository.dart' as _i3;
-import 'package:task_aiagent/domain/usecases/task/complete_task_usecase.dart'
-    as _i7;
 import 'package:task_aiagent/domain/usecases/task/create_task_usecase.dart'
     as _i6;
 
@@ -199,27 +197,4 @@ class MockCreateTaskUseCase extends _i1.Mock implements _i6.CreateTaskUseCase {
             ),
           )
           as _i4.Future<_i2.Result<_i5.Task>>);
-}
-
-/// A class which mocks [CompleteTaskUseCase].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockCompleteTaskUseCase extends _i1.Mock
-    implements _i7.CompleteTaskUseCase {
-  MockCompleteTaskUseCase() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i4.Future<_i2.Result<_i7.TaskCompletionResult>> execute(String? taskId) =>
-      (super.noSuchMethod(
-            Invocation.method(#execute, [taskId]),
-            returnValue: _i4.Future<_i2.Result<_i7.TaskCompletionResult>>.value(
-              _FakeResult_0<_i7.TaskCompletionResult>(
-                this,
-                Invocation.method(#execute, [taskId]),
-              ),
-            ),
-          )
-          as _i4.Future<_i2.Result<_i7.TaskCompletionResult>>);
 }

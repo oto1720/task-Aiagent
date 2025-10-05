@@ -1,9 +1,12 @@
 // lib/data/datasources/local/local_storage_service.dart
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:task_aiagent/domain/entities/task.dart';
 import 'package:task_aiagent/domain/entities/schedule.dart';
 import 'package:task_aiagent/domain/entities/personal_schedule.dart';
+
+part 'local_storage_service.g.dart';
 
 class LocalStorageService {
   static const String _tasksKey = 'tasks';
@@ -151,4 +154,42 @@ class LocalStorageService {
         schedule.date.month == date.month &&
         schedule.date.day == date.day).toList();
   }
+
+  // 汎用メソッド
+  Future<Map<String, dynamic>?> getData(String key) async {
+    final prefs = await _getPrefs();
+    final jsonString = prefs.getString(key);
+    if (jsonString == null) return null;
+    return json.decode(jsonString) as Map<String, dynamic>;
+  }
+
+  Future<void> saveData(String key, Map<String, dynamic> data) async {
+    final prefs = await _getPrefs();
+    final jsonString = json.encode(data);
+    await prefs.setString(key, jsonString);
+  }
+
+  Future<void> deleteData(String key) async {
+    final prefs = await _getPrefs();
+    await prefs.remove(key);
+  }
+
+  Future<List<Map<String, dynamic>>> getListData(String key) async {
+    final prefs = await _getPrefs();
+    final jsonString = prefs.getString(key);
+    if (jsonString == null) return [];
+    final List<dynamic> list = json.decode(jsonString);
+    return list.map((item) => item as Map<String, dynamic>).toList();
+  }
+
+  Future<void> saveListData(String key, List<Map<String, dynamic>> data) async {
+    final prefs = await _getPrefs();
+    final jsonString = json.encode(data);
+    await prefs.setString(key, jsonString);
+  }
+}
+
+@riverpod
+LocalStorageService localStorageService(Ref ref) {
+  return LocalStorageService();
 }
