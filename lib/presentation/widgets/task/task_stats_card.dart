@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_aiagent/core/constant/themes.dart';
 
 class TaskStatsCard extends StatelessWidget {
   final Map<String, int> stats;
@@ -10,59 +11,103 @@ class TaskStatsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(12),
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      elevation: 3,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _buildStatItem(
-            context,
-            '全タスク',
-            stats['total'] ?? 0,
-            Icons.list_alt,
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.white,
+              AppThemes.paleOrange,
+            ],
           ),
-          _buildStatItem(
-            context,
-            '進行中',
-            stats['inProgress'] ?? 0,
-            Icons.play_arrow,
-          ),
-          _buildStatItem(
-            context,
-            '完了',
-            stats['completed'] ?? 0,
-            Icons.check_circle,
-          ),
-        ],
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _buildStatItem(
+              label: '全タスク',
+              count: stats['total'] ?? 0,
+              icon: Icons.format_list_bulleted_rounded,
+              color: AppThemes.textColor,
+            ),
+            _buildDivider(),
+            _buildStatItem(
+              label: 'アクティブ',
+              count: stats['active'] ?? 0,
+              icon: Icons.trending_up_rounded,
+              color: AppThemes.primaryOrange,
+            ),
+            _buildDivider(),
+            _buildStatItem(
+              label: '完了',
+              count: stats['completed'] ?? 0,
+              icon: Icons.check_circle_rounded,
+              color: AppThemes.successColor,
+            ),
+            _buildDivider(),
+            _buildStatItem(
+              label: '緊急',
+              count: stats['urgent'] ?? 0,
+              icon: Icons.priority_high_rounded,
+              color: AppThemes.errorColor,
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildStatItem(
-    BuildContext context,
-    String label,
-    int count,
-    IconData icon,
-  ) {
+  Widget _buildDivider() {
+    return Container(
+      width: 1,
+      height: 50,
+      color: AppThemes.grey200,
+    );
+  }
+
+  Widget _buildStatItem({
+    required String label,
+    required int count,
+    required IconData icon,
+    required Color color,
+  }) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, size: 24, color: Theme.of(context).primaryColor),
-        const SizedBox(height: 4),
+        Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: color.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(icon, size: 26, color: color),
+        ),
+        const SizedBox(height: 8),
         Text(
           count.toString(),
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor,
-              ),
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: color,
+          ),
         ),
+        const SizedBox(height: 4),
         Text(
           label,
-          style: Theme.of(context).textTheme.bodySmall,
+          style: TextStyle(
+            fontSize: 12,
+            color: AppThemes.secondaryTextColor,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ],
     );
