@@ -7,6 +7,10 @@ import 'package:task_aiagent/presentation/widgets/navigation/bottom_navigation_b
 import 'package:task_aiagent/presentation/providers/calendar_provider.dart';
 import 'package:task_aiagent/presentation/providers/task_providers.dart';
 import 'package:task_aiagent/presentation/widgets/task/task_form_dialog.dart';
+import 'package:task_aiagent/presentation/page/home.dart';
+import 'package:task_aiagent/presentation/page/task.dart';
+import 'package:task_aiagent/presentation/page/calendar.dart';
+import 'package:task_aiagent/presentation/page/timer.dart';
 
 class MainScaffold extends ConsumerWidget{
   final Widget child;
@@ -31,7 +35,15 @@ class MainScaffold extends ConsumerWidget{
     final selectedIndex = _calculateSelectedIndex(location);
 
     return Scaffold(
-      body:child,
+      body: IndexedStack(
+        index: selectedIndex,
+        children: const [
+          HomeScreen(),
+          TaskScreen(),
+          CalendarScreen(),
+          TimerPage(),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBarWidget(
         currentIndex: selectedIndex,
         onTap: (index){

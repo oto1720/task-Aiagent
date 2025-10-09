@@ -1,10 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
-import 'package:task_aiagent/presentation/page/home.dart';
-import 'package:task_aiagent/presentation/page/task.dart';
-import 'package:task_aiagent/presentation/page/calendar.dart';
 import 'package:task_aiagent/presentation/widgets/navigation/main_scaffold.dart';
-import 'package:task_aiagent/presentation/page/timer.dart';
 
 
 final GoRouter router = GoRouter(
@@ -20,26 +16,34 @@ final GoRouter router = GoRouter(
       routes: [
         GoRoute(
           path: '/home',
-          builder: (BuildContext context, GoRouterState state) {
-            return const HomeScreen();
+          pageBuilder: (BuildContext context, GoRouterState state) {
+            return NoTransitionPage(
+              child: Container(), // IndexedStackで管理されるため空のWidget
+            );
           },
         ),
         GoRoute(
           path: '/task',
-          builder: (BuildContext context, GoRouterState state) {
-            return const TaskScreen();
+          pageBuilder: (BuildContext context, GoRouterState state) {
+            return NoTransitionPage(
+              child: Container(),
+            );
           },
         ),
         GoRoute(
           path: '/calendar',
-          builder: (BuildContext context, GoRouterState state) {
-            return const CalendarScreen();
+          pageBuilder: (BuildContext context, GoRouterState state) {
+            return NoTransitionPage(
+              child: Container(),
+            );
           },
         ),
         GoRoute(
           path: '/timer',
-          builder: (BuildContext context, GoRouterState state) {
-            return const TimerPage();
+          pageBuilder: (BuildContext context, GoRouterState state) {
+            return NoTransitionPage(
+              child: Container(),
+            );
           },
         ),
       ],
