@@ -125,11 +125,15 @@ class TaskColumn extends StatelessWidget {
   }
 
   Widget _buildTaskList() {
+    // 優先度順にソート（高い優先度が上に表示）
+    final sortedTasks = List<Task>.from(tasks)
+      ..sort((a, b) => a.priorityOrder.compareTo(b.priorityOrder));
+
     return ListView.builder(
       padding: const EdgeInsets.all(8),
-      itemCount: tasks.length,
+      itemCount: sortedTasks.length,
       itemBuilder: (context, index) {
-        final task = tasks[index];
+        final task = sortedTasks[index];
         return Padding(
           padding: const EdgeInsets.only(bottom: 8),
           child: DraggableTaskCard(

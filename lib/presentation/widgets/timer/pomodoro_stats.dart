@@ -1,6 +1,7 @@
 // lib/presentation/widgets/timer/pomodoro_stats.dart
 
 import 'package:flutter/material.dart';
+import 'package:task_aiagent/core/constant/themes.dart';
 
 /// ポモドーロ統計表示ウィジェット
 class PomodoroStats extends StatelessWidget {
@@ -16,32 +17,60 @@ class PomodoroStats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Colors.white,
+            AppThemes.paleOrange,
+          ],
+        ),
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: AppThemes.primaryOrange.withValues(alpha: 0.3),
+          width: 1.5,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: AppThemes.primaryOrange.withValues(alpha: 0.1),
+            blurRadius: 10,
+            spreadRadius: 2,
+          ),
+        ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _buildStatItem(
             context,
-            icon: Icons.check_circle_outline,
+            icon: Icons.check_circle_outline_rounded,
             label: '今日のポモドーロ',
             value: '$todayCount',
-            color: Theme.of(context).primaryColor,
+            color: AppThemes.primaryOrange,
           ),
           Container(
-            width: 1,
-            height: 40,
-            color: Colors.grey[300],
+            width: 2,
+            height: 50,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  AppThemes.grey200,
+                  AppThemes.grey300,
+                  AppThemes.grey200,
+                ],
+              ),
+            ),
           ),
           _buildStatItem(
             context,
-            icon: Icons.refresh,
+            icon: Icons.refresh_rounded,
             label: '現在のサイクル',
             value: '${currentCycle % 4 + 1}/4',
-            color: Colors.orange,
+            color: AppThemes.darkOrange,
           ),
         ],
       ),
@@ -57,26 +86,34 @@ class PomodoroStats extends StatelessWidget {
   }) {
     return Column(
       children: [
-        Icon(
-          icon,
-          color: color,
-          size: 28,
+        Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: color.withValues(alpha: 0.15),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(
+            icon,
+            color: color,
+            size: 28,
+          ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 12),
         Text(
           value,
           style: TextStyle(
-            fontSize: 24,
+            fontSize: 28,
             fontWeight: FontWeight.bold,
             color: color,
           ),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 6),
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 12,
-            color: Colors.grey[600],
+            color: AppThemes.secondaryTextColor,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ],

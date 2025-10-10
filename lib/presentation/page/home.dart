@@ -7,6 +7,7 @@ import 'package:task_aiagent/domain/entities/schedule.dart';
 import 'package:task_aiagent/domain/entities/task.dart';
 import 'package:go_router/go_router.dart';
 import 'package:task_aiagent/presentation/providers/schedule_providers.dart';
+import 'package:task_aiagent/core/constant/themes.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -52,36 +53,62 @@ class HomeScreen extends ConsumerWidget {
   Widget _buildDateHeader() {
     final now = DateTime.now();
     final dateFormat = DateFormat('yyyy年MM月dd日 (E)', 'ja_JP');
-    
+
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
+      elevation: 3,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Container(
+        padding: const EdgeInsets.all(20.0),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.white,
+              AppThemes.paleOrange,
+            ],
+          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
         child: Row(
           children: [
-            Icon(
-              Icons.today,
-              size: 32,
-              color: Colors.blue[600],
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: AppThemes.primaryOrange.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(
+                Icons.today_rounded,
+                size: 32,
+                color: AppThemes.primaryOrange,
+              ),
             ),
-            const SizedBox(width: 12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  dateFormat.format(now),
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    dateFormat.format(now),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: AppThemes.textColor,
+                    ),
                   ),
-                ),
-                Text(
-                  _getGreetingMessage(),
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey[600],
+                  const SizedBox(height: 4),
+                  Text(
+                    _getGreetingMessage(),
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: AppThemes.secondaryTextColor,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
@@ -103,8 +130,8 @@ class HomeScreen extends ConsumerWidget {
           child: _buildStatCard(
             '全タスク',
             stats['total']?.toString() ?? '0',
-            Icons.assignment,
-            Colors.blue,
+            Icons.assignment_rounded,
+            AppThemes.textColor,
           ),
         ),
         const SizedBox(width: 8),
@@ -112,8 +139,8 @@ class HomeScreen extends ConsumerWidget {
           child: _buildStatCard(
             '未完了',
             stats['pending']?.toString() ?? '0',
-            Icons.pending_actions,
-            Colors.orange,
+            Icons.pending_actions_rounded,
+            AppThemes.primaryOrange,
           ),
         ),
         const SizedBox(width: 8),
@@ -121,8 +148,8 @@ class HomeScreen extends ConsumerWidget {
           child: _buildStatCard(
             '完了済み',
             stats['completed']?.toString() ?? '0',
-            Icons.check_circle,
-            Colors.green,
+            Icons.check_circle_rounded,
+            AppThemes.successColor,
           ),
         ),
       ],
@@ -131,23 +158,54 @@ class HomeScreen extends ConsumerWidget {
 
   Widget _buildStatCard(String title, String value, IconData icon, Color color) {
     return Card(
-      child: Padding(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(
+          color: color.withValues(alpha: 0.3),
+          width: 1.5,
+        ),
+      ),
+      child: Container(
         padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.white,
+              color.withValues(alpha: 0.05),
+            ],
+          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
         child: Column(
           children: [
-            Icon(icon, color: color, size: 24),
-            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: color.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(icon, color: color, size: 24),
+            ),
+            const SizedBox(height: 12),
             Text(
               value,
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: color,
               ),
             ),
+            const SizedBox(height: 4),
             Text(
               title,
-              style: const TextStyle(fontSize: 12),
+              style: const TextStyle(
+                fontSize: 12,
+                color: AppThemes.secondaryTextColor,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ],
         ),
@@ -157,46 +215,74 @@ class HomeScreen extends ConsumerWidget {
 
   Widget _buildScheduleGenerationCard(BuildContext context, WidgetRef ref, bool hasTask) {
     return Card(
-      color: Colors.purple[50],
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
+      elevation: 3,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(
+          color: AppThemes.darkOrange.withValues(alpha: 0.3),
+          width: 1.5,
+        ),
+      ),
+      child: Container(
+        padding: const EdgeInsets.all(20.0),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              AppThemes.paleOrange.withValues(alpha: 0.3),
+              AppThemes.paleOrange,
+            ],
+          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Icon(Icons.auto_awesome, color: Colors.purple[600]),
-                const SizedBox(width: 8),
-                Text(
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: AppThemes.darkOrange.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Icon(
+                    Icons.auto_awesome_rounded,
+                    color: AppThemes.darkOrange,
+                    size: 24,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                const Text(
                   'AI時間割生成',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.purple[600],
+                    color: AppThemes.textColor,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 12),
             Text(
-              hasTask 
+              hasTask
                   ? 'AIがあなたのタスクを分析して、最適な時間割を自動生成します。'
                   : 'タスクを追加してからAI時間割を生成してください。',
-              style: TextStyle(color: Colors.grey[600]),
+              style: const TextStyle(
+                color: AppThemes.secondaryTextColor,
+                fontSize: 14,
+              ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
                 onPressed: hasTask
                     ? () => _generateSchedule(context, ref)
                     : null,
-                icon: const Icon(Icons.schedule),
+                icon: const Icon(Icons.schedule_rounded),
                 label: const Text('今日の時間割を生成'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.purple[600],
-                  foregroundColor: Colors.white,
-                ),
               ),
             ),
           ],
@@ -207,40 +293,67 @@ class HomeScreen extends ConsumerWidget {
 
   Widget _buildTodaySchedule(BuildContext context, DailySchedule? schedule) {
     return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Row(
+            Row(
               children: [
-                Icon(Icons.schedule, color: Colors.blue),
-                SizedBox(width: 8),
-                Text(
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: AppThemes.primaryOrange.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Icon(
+                    Icons.schedule_rounded,
+                    color: AppThemes.primaryOrange,
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                const Text(
                   '今日のスケジュール',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
+                    color: AppThemes.textColor,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
             if (schedule == null)
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(8),
+                  color: AppThemes.grey50,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: AppThemes.grey200,
+                    width: 1,
+                  ),
                 ),
                 child: Column(
                   children: [
-                    Icon(Icons.calendar_today, color: Colors.grey[400], size: 48),
-                    const SizedBox(height: 8),
-                    Text(
+                    Icon(
+                      Icons.calendar_today_rounded,
+                      color: AppThemes.grey400,
+                      size: 48,
+                    ),
+                    const SizedBox(height: 12),
+                    const Text(
                       'まだスケジュールが生成されていません',
-                      style: TextStyle(color: Colors.grey[600]),
+                      style: TextStyle(
+                        color: AppThemes.secondaryTextColor,
+                        fontSize: 14,
+                      ),
                     ),
                   ],
                 ),
@@ -260,84 +373,147 @@ class HomeScreen extends ConsumerWidget {
   Widget _buildScheduleBlock(ScheduleBlock block) {
     final startTime = DateFormat('HH:mm').format(block.startTime);
     final endTime = DateFormat('HH:mm').format(block.endTime);
-    
+
     Color priorityColor;
     switch (block.priority) {
+      case TaskPriority.urgent:
+        priorityColor = AppThemes.errorColor;
+        break;
       case TaskPriority.high:
-        priorityColor = Colors.red;
+        priorityColor = AppThemes.primaryOrange;
         break;
       case TaskPriority.medium:
-        priorityColor = Colors.orange;
+        priorityColor = AppThemes.lightOrange;
         break;
       case TaskPriority.low:
-        priorityColor = Colors.green;
-        break;
-      case TaskPriority.urgent:
-        priorityColor = Colors.red;
+        priorityColor = AppThemes.successColor;
         break;
     }
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
-        border: Border(left: BorderSide(color: priorityColor, width: 4)),
-        color: Colors.grey[50],
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(8),
-          bottomRight: Radius.circular(8),
+        color: AppThemes.grey50,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: priorityColor.withValues(alpha: 0.3),
+          width: 1.5,
         ),
       ),
-      child: Row(
-        children: [
-          Container(
-            width: 80,
-            child: Text(
-              '$startTime\n$endTime',
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  block.taskTitle,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Text(
-                  '${block.durationInMinutes}分',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey[600],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: priorityColor.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Text(
-              _getPriorityText(block.priority),
-              style: TextStyle(
-                fontSize: 10,
+      child: IntrinsicHeight(
+        child: Row(
+          children: [
+            Container(
+              width: 5,
+              decoration: BoxDecoration(
                 color: priorityColor,
-                fontWeight: FontWeight.bold,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  bottomLeft: Radius.circular(12),
+                ),
               ),
             ),
-          ),
-        ],
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 70,
+                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
+                      decoration: BoxDecoration(
+                        color: priorityColor.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            startTime,
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: priorityColor,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Icon(
+                            Icons.arrow_downward_rounded,
+                            size: 12,
+                            color: priorityColor,
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            endTime,
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: priorityColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            block.taskTitle,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                              color: AppThemes.textColor,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.schedule_outlined,
+                                size: 14,
+                                color: AppThemes.secondaryTextColor,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                '${block.durationInMinutes}分',
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: AppThemes.secondaryTextColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: priorityColor.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: priorityColor.withValues(alpha: 0.3),
+                          width: 1,
+                        ),
+                      ),
+                      child: Text(
+                        _getPriorityText(block.priority),
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: priorityColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -359,23 +535,39 @@ class HomeScreen extends ConsumerWidget {
     final displayTasks = tasks.take(5).toList();
 
     return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Row(
+                Row(
                   children: [
-                    Icon(Icons.upcoming, color: Colors.orange),
-                    SizedBox(width: 8),
-                    Text(
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: AppThemes.primaryOrange.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Icon(
+                        Icons.upcoming_rounded,
+                        color: AppThemes.primaryOrange,
+                        size: 20,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    const Text(
                       '近日中のタスク',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
+                        color: AppThemes.textColor,
                       ),
                     ),
                   ],
@@ -386,18 +578,33 @@ class HomeScreen extends ConsumerWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
             if (displayTasks.isEmpty)
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  color: AppThemes.grey50,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: AppThemes.grey200,
+                    width: 1,
+                  ),
+                ),
                 child: Column(
                   children: [
-                    Icon(Icons.check_circle_outline, color: Colors.grey[400], size: 48),
-                    const SizedBox(height: 8),
-                    Text(
+                    Icon(
+                      Icons.check_circle_outline_rounded,
+                      color: AppThemes.successColor.withValues(alpha: 0.5),
+                      size: 48,
+                    ),
+                    const SizedBox(height: 12),
+                    const Text(
                       'すべてのタスクが完了しています！',
-                      style: TextStyle(color: Colors.grey[600]),
+                      style: TextStyle(
+                        color: AppThemes.secondaryTextColor,
+                        fontSize: 14,
+                      ),
                     ),
                   ],
                 ),
@@ -415,45 +622,131 @@ class HomeScreen extends ConsumerWidget {
   }
 
   Widget _buildTaskTile(BuildContext context, WidgetRef ref, Task task) {
+    final priorityColor = _getPriorityColor(task.priority);
+
     return Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      child: ListTile(
-        leading: Checkbox(
-          value: task.status == TaskStatus.completed,
-          onChanged: (_) => ref.read(taskListProvider.notifier).completeTask(task.id),
+      margin: const EdgeInsets.only(bottom: 10),
+      decoration: BoxDecoration(
+        color: AppThemes.grey50,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: priorityColor.withValues(alpha: 0.3),
+          width: 1.5,
         ),
-        title: Text(
-          task.title,
-          style: TextStyle(
-            decoration: task.status == TaskStatus.completed
-                ? TextDecoration.lineThrough
-                : null,
-          ),
+      ),
+      child: IntrinsicHeight(
+        child: Row(
+          children: [
+            Container(
+              width: 4,
+              decoration: BoxDecoration(
+                color: priorityColor,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  bottomLeft: Radius.circular(12),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                child: ListTile(
+                  leading: Transform.scale(
+                    scale: 1.2,
+                    child: Checkbox(
+                      value: task.status == TaskStatus.completed,
+                      onChanged: (_) => ref.read(taskListProvider.notifier).completeTask(task.id),
+                      activeColor: AppThemes.primaryOrange,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                  ),
+                  title: Text(
+                    task.title,
+                    style: TextStyle(
+                      decoration: task.status == TaskStatus.completed
+                          ? TextDecoration.lineThrough
+                          : null,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                      color: task.status == TaskStatus.completed
+                          ? AppThemes.grey400
+                          : AppThemes.textColor,
+                    ),
+                  ),
+                  subtitle: Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.schedule_outlined,
+                          size: 14,
+                          color: AppThemes.secondaryTextColor,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          '${task.estimatedMinutes}分',
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: AppThemes.secondaryTextColor,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Icon(
+                          Icons.folder_outlined,
+                          size: 14,
+                          color: AppThemes.secondaryTextColor,
+                        ),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: Text(
+                            task.category,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: AppThemes.secondaryTextColor,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  trailing: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: priorityColor.withValues(alpha: 0.15),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Container(
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: priorityColor,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                ),
+              ),
+            ),
+          ],
         ),
-        subtitle: Text('${task.estimatedMinutes}分 · ${task.category}'),
-        trailing: Container(
-          width: 12,
-          height: 12,
-          decoration: BoxDecoration(
-            color: _getPriorityColor(task.priority),
-            shape: BoxShape.circle,
-          ),
-        ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 8),
       ),
     );
   }
 
   Color _getPriorityColor(TaskPriority priority) {
     switch (priority) {
-      case TaskPriority.high:
-        return Colors.red;
-      case TaskPriority.medium:
-        return Colors.orange;
-      case TaskPriority.low:
-        return Colors.green;
       case TaskPriority.urgent:
-        return Colors.red;
+        return AppThemes.errorColor;
+      case TaskPriority.high:
+        return AppThemes.primaryOrange;
+      case TaskPriority.medium:
+        return AppThemes.lightOrange;
+      case TaskPriority.low:
+        return AppThemes.successColor;
     }
   }
 

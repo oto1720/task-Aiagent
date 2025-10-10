@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:task_aiagent/domain/entities/timer.dart' as timer_entity;
+import 'package:task_aiagent/core/constant/themes.dart';
 
 /// タイマー操作コントロールウィジェット
 class TimerControls extends StatelessWidget {
@@ -33,10 +34,10 @@ class TimerControls extends StatelessWidget {
       children: [
         // リセットボタン
         if (timer!.state != timer_entity.TimerState.idle)
-          IconButton(
+          _buildControlButton(
+            icon: Icons.refresh_rounded,
             onPressed: onReset,
-            icon: const Icon(Icons.refresh),
-            iconSize: 32,
+            color: AppThemes.grey600,
             tooltip: 'リセット',
           ),
         const SizedBox(width: 24),
@@ -46,13 +47,38 @@ class TimerControls extends StatelessWidget {
         // スキップボタン（完了）
         if (timer!.state != timer_entity.TimerState.idle &&
             timer!.state != timer_entity.TimerState.completed)
-          IconButton(
+          _buildControlButton(
+            icon: Icons.skip_next_rounded,
             onPressed: onComplete,
-            icon: const Icon(Icons.skip_next),
-            iconSize: 32,
+            color: AppThemes.darkOrange,
             tooltip: '完了',
           ),
       ],
+    );
+  }
+
+  Widget _buildControlButton({
+    required IconData icon,
+    required VoidCallback? onPressed,
+    required Color color,
+    required String tooltip,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: color.withValues(alpha: 0.3),
+          width: 2,
+        ),
+      ),
+      child: IconButton(
+        onPressed: onPressed,
+        icon: Icon(icon),
+        iconSize: 32,
+        tooltip: tooltip,
+        color: color,
+      ),
     );
   }
 
@@ -67,30 +93,43 @@ class TimerControls extends StatelessWidget {
     Color color;
 
     if (isRunning) {
-      icon = Icons.pause;
+      icon = Icons.pause_rounded;
       onPressed = onPause;
-      color = Colors.orange;
+      color = AppThemes.lightOrange;
     } else if (isPaused) {
-      icon = Icons.play_arrow;
+      icon = Icons.play_arrow_rounded;
       onPressed = onResume;
-      color = Colors.green;
+      color = AppThemes.successColor;
     } else if (isIdle || isCompleted) {
-      icon = Icons.play_arrow;
+      icon = Icons.play_arrow_rounded;
       onPressed = onStart;
-      color = Theme.of(context).primaryColor;
+      color = AppThemes.primaryOrange;
     } else {
-      icon = Icons.play_arrow;
+      icon = Icons.play_arrow_rounded;
       onPressed = null;
-      color = Colors.grey;
+      color = AppThemes.grey400;
     }
 
-    return FloatingActionButton(
-      onPressed: onPressed,
-      backgroundColor: color,
-      child: Icon(
-        icon,
-        size: 36,
-        color: Colors.white,
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: color.withValues(alpha: 0.3),
+            blurRadius: 12,
+            spreadRadius: 2,
+          ),
+        ],
+      ),
+      child: FloatingActionButton(
+        onPressed: onPressed,
+        backgroundColor: color,
+        elevation: 0,
+        child: Icon(
+          icon,
+          size: 40,
+          color: Colors.white,
+        ),
       ),
     );
   }
