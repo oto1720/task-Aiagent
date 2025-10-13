@@ -1,4 +1,3 @@
-
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_aiagent/domain/entities/task.dart';
@@ -78,15 +77,12 @@ class TaskList extends _$TaskList {
       dueDate: dueDate,
     );
 
-    result.fold(
-      (failure) => throw Exception(failure.message),
-      (task) {
-        // 成功時は状態を更新
-        state.whenData((currentTasks) {
-          state = AsyncValue.data([...currentTasks, task]);
-        });
-      },
-    );
+    result.fold((failure) => throw Exception(failure.message), (task) {
+      // 成功時は状態を更新
+      state.whenData((currentTasks) {
+        state = AsyncValue.data([...currentTasks, task]);
+      });
+    });
   }
 
   Future<void> updateTask(Task task) async {
@@ -94,17 +90,14 @@ class TaskList extends _$TaskList {
 
     final result = await repository.updateTask(task);
 
-    result.fold(
-      (failure) => throw Exception(failure.message),
-      (updatedTask) {
-        state.whenData((currentTasks) {
-          final updatedList = currentTasks.map((t) =>
-            t.id == updatedTask.id ? updatedTask : t
-          ).toList();
-          state = AsyncValue.data(updatedList);
-        });
-      },
-    );
+    result.fold((failure) => throw Exception(failure.message), (updatedTask) {
+      state.whenData((currentTasks) {
+        final updatedList = currentTasks
+            .map((t) => t.id == updatedTask.id ? updatedTask : t)
+            .toList();
+        state = AsyncValue.data(updatedList);
+      });
+    });
   }
 
   Future<void> deleteTask(String taskId) async {
@@ -112,15 +105,14 @@ class TaskList extends _$TaskList {
 
     final result = await repository.deleteTask(taskId);
 
-    result.fold(
-      (failure) => throw Exception(failure.message),
-      (_) {
-        state.whenData((currentTasks) {
-          final updatedList = currentTasks.where((task) => task.id != taskId).toList();
-          state = AsyncValue.data(updatedList);
-        });
-      },
-    );
+    result.fold((failure) => throw Exception(failure.message), (_) {
+      state.whenData((currentTasks) {
+        final updatedList = currentTasks
+            .where((task) => task.id != taskId)
+            .toList();
+        state = AsyncValue.data(updatedList);
+      });
+    });
   }
 
   Future<void> completeTask(String taskId) async {
@@ -128,20 +120,22 @@ class TaskList extends _$TaskList {
 
     final result = await completeUseCase.execute(taskId);
 
-    result.fold(
-      (failure) => throw Exception(failure.message),
-      (completionResult) {
-        state.whenData((currentTasks) {
-          final updatedList = currentTasks.map((task) =>
-            task.id == taskId ? completionResult.completedTask : task
-          ).toList();
-          state = AsyncValue.data(updatedList);
+    result.fold((failure) => throw Exception(failure.message), (
+      completionResult,
+    ) {
+      state.whenData((currentTasks) {
+        final updatedList = currentTasks
+            .map(
+              (task) =>
+                  task.id == taskId ? completionResult.completedTask : task,
+            )
+            .toList();
+        state = AsyncValue.data(updatedList);
 
-          // 完了メッセージの通知（ここでSnackBarやToastを表示する処理を呼び出し）
-          _showCompletionMessage(completionResult.message);
-        });
-      },
-    );
+        // 完了メッセージの通知（ここでSnackBarやToastを表示する処理を呼び出し）
+        _showCompletionMessage(completionResult.message);
+      });
+    });
   }
 
   Future<void> reorderTasks(List<Task> reorderedTasks) async {
@@ -166,7 +160,8 @@ class TaskList extends _$TaskList {
 List<Task> activeTasks(Ref ref) {
   final taskList = ref.watch(taskListProvider);
   return taskList.when(
-    data: (tasks) => tasks.where((task) => task.status != TaskStatus.completed).toList(),
+    data: (tasks) =>
+        tasks.where((task) => task.status != TaskStatus.completed).toList(),
     loading: () => [],
     error: (error, stack) => [],
   );
@@ -176,10 +171,9 @@ List<Task> activeTasks(Ref ref) {
 List<Task> completedTasks(Ref ref) {
   final taskList = ref.watch(taskListProvider);
   return taskList.when(
-    data: (tasks) => tasks
-        .where((task) => task.status == TaskStatus.completed)
-        .toList()
-      ..sort((a, b) => b.updatedAt!.compareTo(a.updatedAt!)),
+    data: (tasks) =>
+        tasks.where((task) => task.status == TaskStatus.completed).toList()
+          ..sort((a, b) => b.updatedAt!.compareTo(a.updatedAt!)),
     loading: () => [],
     error: (error, stack) => [],
   );
@@ -220,9 +214,13 @@ Map<String, int> taskStats(Ref ref) {
       'total': tasks.length,
       'active': tasks.where((t) => t.status != TaskStatus.completed).length,
       'completed': tasks.where((t) => t.status == TaskStatus.completed).length,
-      'urgent': tasks.where((t) =>
-          t.priority == TaskPriority.urgent &&
-          t.status != TaskStatus.completed).length,
+      'urgent': tasks
+          .where(
+            (t) =>
+                t.priority == TaskPriority.urgent &&
+                t.status != TaskStatus.completed,
+          )
+          .length,
       'today': tasks.where((t) {
         if (t.dueDate == null) return false;
         final today = DateTime.now();

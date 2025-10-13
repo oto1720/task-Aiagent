@@ -31,7 +31,10 @@ class DraggableTaskCard extends StatelessWidget {
       childWhenDragging: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.grey[300]!, style: BorderStyle.solid),
+          border: Border.all(
+            color: Colors.grey[300]!,
+            style: BorderStyle.solid,
+          ),
           color: Colors.grey[100],
         ),
         child: _buildCardContent(context, isPlaceholder: true),
@@ -40,7 +43,11 @@ class DraggableTaskCard extends StatelessWidget {
     );
   }
 
-  Widget _buildCardContent(BuildContext context, {bool isDragging = false, bool isPlaceholder = false}) {
+  Widget _buildCardContent(
+    BuildContext context, {
+    bool isDragging = false,
+    bool isPlaceholder = false,
+  }) {
     final formatter = TaskFormattingUseCase();
     final opacity = isPlaceholder ? 0.3 : 1.0;
 
@@ -82,10 +89,7 @@ class DraggableTaskCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   task.description,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey[600],
-                  ),
+                  style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -100,10 +104,7 @@ class DraggableTaskCard extends StatelessWidget {
                   const SizedBox(width: 4),
                   Text(
                     formatter.formatEstimatedTime(task.estimatedMinutes),
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: Colors.grey[600],
-                    ),
+                    style: TextStyle(fontSize: 11, color: Colors.grey[600]),
                   ),
                   if (task.dueDate != null) ...[
                     const SizedBox(width: 12),
@@ -132,10 +133,7 @@ class DraggableTaskCard extends StatelessWidget {
                   width: double.infinity,
                   child: OutlinedButton.icon(
                     onPressed: onStatusToggle,
-                    icon: Icon(
-                      _getStatusIcon(),
-                      size: 16,
-                    ),
+                    icon: Icon(_getStatusIcon(), size: 16),
                     label: Text(
                       _getStatusButtonText(),
                       style: const TextStyle(fontSize: 12),
@@ -163,11 +161,7 @@ class DraggableTaskCard extends StatelessWidget {
         color: indicatorData.color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(4),
       ),
-      child: Icon(
-        indicatorData.icon,
-        color: indicatorData.color,
-        size: 14,
-      ),
+      child: Icon(indicatorData.icon, color: indicatorData.color, size: 14),
     );
   }
 
@@ -205,11 +199,7 @@ class DraggableTaskCard extends StatelessWidget {
           ),
         ),
       ],
-      child: Icon(
-        Icons.more_vert,
-        size: 16,
-        color: Colors.grey[600],
-      ),
+      child: Icon(Icons.more_vert, size: 16, color: Colors.grey[600]),
     );
   }
 
