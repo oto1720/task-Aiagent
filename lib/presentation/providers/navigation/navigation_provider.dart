@@ -15,17 +15,19 @@ class NavigationNotifier extends _$NavigationNotifier {
     return const NavigationState(currentTab: TabType.home, currentIndex: 0);
   }
 
-void switchTab(TabType tabType){
-  state = _navigationUseCase.switchTab(state, tabType);
-}
-void switchTabByIndex(int index){
-  state = _navigationUseCase.switchTabByIndex(state, index);
-}
-String getTabRoute(TabType tabType){
-  return _navigationUseCase.getRouteForTab(state.currentTab);
-}
-  
-  NavigationUseCase navigationUseCase( ref) {
+  void switchTab(TabType tabType) {
+    state = _navigationUseCase.switchTab(state, tabType);
+  }
+
+  void switchTabByIndex(int index) {
+    state = _navigationUseCase.switchTabByIndex(state, index);
+  }
+
+  String getTabRoute(TabType tabType) {
+    return _navigationUseCase.getRouteForTab(state.currentTab);
+  }
+
+  NavigationUseCase navigationUseCase(ref) {
     return NavigationUseCase();
   }
 }

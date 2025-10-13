@@ -41,15 +41,9 @@ class TaskList extends StatelessWidget {
           onStatusToggle: onStatusToggle != null
               ? () => onStatusToggle!(task)
               : null,
-          onComplete: onComplete != null
-              ? () => onComplete!(task)
-              : null,
-          onEdit: onEdit != null
-              ? () => onEdit!(task)
-              : null,
-          onDelete: onDelete != null
-              ? () => onDelete!(task)
-              : null,
+          onComplete: onComplete != null ? () => onComplete!(task) : null,
+          onEdit: onEdit != null ? () => onEdit!(task) : null,
+          onDelete: onDelete != null ? () => onDelete!(task) : null,
         );
       },
     );
@@ -70,10 +64,7 @@ class TaskList extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             formatter.getEmptyStateMessage(tabStatus),
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.grey,
-            ),
+            style: const TextStyle(fontSize: 16, color: Colors.grey),
           ),
         ],
       ),
