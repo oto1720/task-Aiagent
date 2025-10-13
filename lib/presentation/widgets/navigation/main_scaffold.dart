@@ -7,10 +7,11 @@ import 'package:task_aiagent/presentation/widgets/navigation/bottom_navigation_b
 import 'package:task_aiagent/presentation/providers/calendar_provider.dart';
 import 'package:task_aiagent/presentation/providers/task_providers.dart';
 import 'package:task_aiagent/presentation/widgets/task/task_form_dialog.dart';
-import 'package:task_aiagent/presentation/page/home.dart';
-import 'package:task_aiagent/presentation/page/task.dart';
-import 'package:task_aiagent/presentation/page/calendar.dart';
-import 'package:task_aiagent/presentation/page/timer.dart';
+import 'package:task_aiagent/presentation/pages/timer_page.dart';
+import 'package:task_aiagent/presentation/pages/home_page.dart';
+import 'package:task_aiagent/presentation/pages/task_page.dart';
+import 'package:task_aiagent/presentation/pages/calendar_page.dart';
+
 
 class MainScaffold extends ConsumerWidget{
   final Widget child;
@@ -38,9 +39,9 @@ class MainScaffold extends ConsumerWidget{
       body: IndexedStack(
         index: selectedIndex,
         children: const [
-          HomeScreen(),
-          TaskScreen(),
-          CalendarScreen(),
+          HomePage(),
+          TaskPage(),
+          CalendarPage(),
           TimerPage(),
         ],
       ),

@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:task_aiagent/presentation/providers/task_providers.dart';
 import 'package:task_aiagent/domain/entities/task.dart';
 import 'package:task_aiagent/domain/usecases/task/task_management_usecase.dart';
-import 'package:task_aiagent/presentation/widgets/task/task_board.dart';
-import 'package:task_aiagent/presentation/widgets/task/task_stats_card.dart';
-import 'package:task_aiagent/presentation/widgets/task/task_form_dialog.dart';
+import 'package:task_aiagent/presentation/providers/task_providers.dart';
+import 'package:task_aiagent/presentation/features/task/widgets/task_search_bar.dart';
+import 'package:task_aiagent/presentation/features/task/widgets/task_stats_card.dart';
+import 'package:task_aiagent/presentation/features/task/widgets/task_board.dart';
+import 'package:task_aiagent/presentation/features/task/widgets/task_form_dialog.dart';
 
-class TaskScreen extends ConsumerStatefulWidget {
-  const TaskScreen({super.key});
+/// タスクフィーチャーメインウィジェット
+class TaskFeature extends ConsumerStatefulWidget {
+  const TaskFeature({super.key});
 
   @override
-  ConsumerState<TaskScreen> createState() => _TaskScreenState();
+  ConsumerState<TaskFeature> createState() => _TaskFeatureState();
 }
 
-class _TaskScreenState extends ConsumerState<TaskScreen> {
+class _TaskFeatureState extends ConsumerState<TaskFeature> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
-
   final _taskManagement = TaskManagementUseCase();
 
   @override
@@ -35,7 +36,9 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
       data: (tasks) {
         final filteredTasks = _taskManagement.filterTasks(tasks, _searchQuery);
         final upcomingTasks = _taskManagement.getUpcomingTasks(filteredTasks);
-        final inProgressTasks = _taskManagement.getInProgressTasks(filteredTasks);
+        final inProgressTasks = _taskManagement.getInProgressTasks(
+          filteredTasks,
+        );
         final completedTasks = _taskManagement.getCompletedTasks(filteredTasks);
 
         return Column(
@@ -44,7 +47,12 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
             TaskStatsCard(stats: taskStats),
 
             // 検索バー
-            _buildSearchBar(),
+            TaskSearchBar(
+              controller: _searchController,
+              searchQuery: _searchQuery,
+              onChanged: _updateSearchQuery,
+              onClear: _clearSearch,
+            ),
 
             // Kanbanボード
             Expanded(
@@ -68,41 +76,6 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
     );
   }
 
-  // PreferredSizeWidget _buildAppBar() {
-  //   return AppBar(
-  //     title: const Text('タスク管理ボード'),
-  //     backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-  //     centerTitle: true,
-  //   );
-  // }
-
-  Widget _buildSearchBar() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      child: TextField(
-        controller: _searchController,
-        decoration: InputDecoration(
-          hintText: 'タスクを検索...',
-          prefixIcon: const Icon(Icons.search),
-          suffixIcon: _searchQuery.isNotEmpty
-              ? IconButton(
-                  icon: const Icon(Icons.clear),
-                  onPressed: _clearSearch,
-                )
-              : null,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(25),
-          ),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 8,
-          ),
-        ),
-        onChanged: _updateSearchQuery,
-      ),
-    );
-  }
-
   void _updateSearchQuery(String value) {
     setState(() {
       _searchQuery = value;
@@ -117,12 +90,7 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
   }
 
   void _handleTaskStatusChanged(Task task, TaskStatus newStatus) {
-    print('_handleTaskStatusChanged: task=${task.title}, oldStatus=${task.status}, newStatus=$newStatus');
-
-    // toggleTaskStatusではなく、直接copyWithを使用
     final updatedTask = task.copyWith(status: newStatus);
-    print('updatedTask: title=${updatedTask.title}, status=${updatedTask.status}');
-
     ref.read(taskListProvider.notifier).updateTask(updatedTask);
   }
 
@@ -133,17 +101,6 @@ class _TaskScreenState extends ConsumerState<TaskScreen> {
   void _handleTaskDelete(Task task) {
     _showDeleteConfirmDialog(task);
   }
-
-  // void _showAddTaskDialog() {
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) => TaskFormDialog(
-  //       onSave: (task) {
-  //         ref.read(taskListProvider.notifier).addTask(task);
-  //       },
-  //     ),
-  //   );
-  // }
 
   void _showEditTaskDialog(Task task) {
     showDialog(

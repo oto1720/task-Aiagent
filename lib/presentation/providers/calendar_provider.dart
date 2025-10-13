@@ -14,6 +14,7 @@ class SelectedDay extends _$SelectedDay {
   DateTime build() {
     return DateTime.now();
   }
+
   void set(DateTime date) {
     // 時刻情報をリセットして日付のみを保持
     state = DateTime.utc(date.year, date.month, date.day);
@@ -31,7 +32,11 @@ Map<DateTime, List<Task>> calendarEvents(Ref ref) {
       for (final task in tasks) {
         if (task.dueDate != null) {
           // 時刻情報を無視した日付のみのキー
-          final dateKey = DateTime.utc(task.dueDate!.year, task.dueDate!.month, task.dueDate!.day);
+          final dateKey = DateTime.utc(
+            task.dueDate!.year,
+            task.dueDate!.month,
+            task.dueDate!.day,
+          );
           if (events[dateKey] == null) {
             events[dateKey] = [];
           }
@@ -76,8 +81,12 @@ class CombinedTodaySchedule extends _$CombinedTodaySchedule {
     }
 
     combined.sort((a, b) {
-      final aStartTime = a is PersonalSchedule ? a.startTime : (a as ScheduleBlock).startTime;
-      final bStartTime = b is PersonalSchedule ? b.startTime : (b as ScheduleBlock).startTime;
+      final aStartTime = a is PersonalSchedule
+          ? a.startTime
+          : (a as ScheduleBlock).startTime;
+      final bStartTime = b is PersonalSchedule
+          ? b.startTime
+          : (b as ScheduleBlock).startTime;
       return aStartTime.compareTo(bStartTime);
     });
 

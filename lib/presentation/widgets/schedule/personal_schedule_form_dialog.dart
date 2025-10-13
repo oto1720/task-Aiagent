@@ -54,9 +54,7 @@ class _PersonalScheduleFormDialogState
     final isEditing = widget.schedule != null;
 
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Container(
         padding: const EdgeInsets.all(20),
         constraints: const BoxConstraints(maxWidth: 400),
@@ -68,10 +66,7 @@ class _PersonalScheduleFormDialogState
             children: [
               Row(
                 children: [
-                  Icon(
-                    Icons.event,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                  Icon(Icons.event, color: Theme.of(context).primaryColor),
                   const SizedBox(width: 8),
                   Text(
                     isEditing ? 'スケジュール編集' : 'スケジュール追加',
@@ -84,9 +79,9 @@ class _PersonalScheduleFormDialogState
               const SizedBox(height: 8),
               Text(
                 DateFormat('M月d日 (E)', 'ja_JP').format(widget.selectedDate),
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.grey[600],
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
               ),
               const SizedBox(height: 20),
 
@@ -174,7 +169,9 @@ class _PersonalScheduleFormDialogState
           initialTime: time,
           builder: (context, child) {
             return MediaQuery(
-              data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+              data: MediaQuery.of(
+                context,
+              ).copyWith(alwaysUse24HourFormat: true),
               child: child!,
             );
           },
@@ -194,18 +191,12 @@ class _PersonalScheduleFormDialogState
           children: [
             Text(
               label,
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.grey[600],
-              ),
+              style: TextStyle(fontSize: 12, color: Colors.grey[600]),
             ),
             const SizedBox(height: 4),
             Text(
               '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}',
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
           ],
         ),
@@ -234,7 +225,8 @@ class _PersonalScheduleFormDialogState
       _endTime.minute,
     );
 
-    if (endDateTime.isBefore(startDateTime) || endDateTime.isAtSameMomentAs(startDateTime)) {
+    if (endDateTime.isBefore(startDateTime) ||
+        endDateTime.isAtSameMomentAs(startDateTime)) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('終了時間は開始時間より後に設定してください'),

@@ -73,10 +73,7 @@ Future<int> todayPomodoroCount(Ref ref) async {
   final repository = ref.watch(timerRepositoryProvider);
   final result = await repository.getTodayPomodoroCount();
 
-  return result.fold(
-    (failure) => 0,
-    (count) => count,
-  );
+  return result.fold((failure) => 0, (count) => count);
 }
 
 /// タイマー状態管理プロバイダー
@@ -93,10 +90,7 @@ class TimerNotifier extends _$TimerNotifier {
     final repository = ref.watch(timerRepositoryProvider);
     final result = await repository.getCurrentTimer();
 
-    return result.fold(
-      (failure) => null,
-      (timer) => timer,
-    );
+    return result.fold((failure) => null, (timer) => timer);
   }
 
   /// 新しいタイマーを作成
@@ -150,13 +144,10 @@ class TimerNotifier extends _$TimerNotifier {
     final useCase = ref.read(startTimerUseCaseProvider);
     final result = await useCase(currentTimer);
 
-    result.fold(
-      (failure) => throw Exception(failure.message),
-      (timer) {
-        state = AsyncValue.data(timer);
-        _startCountdown();
-      },
-    );
+    result.fold((failure) => throw Exception(failure.message), (timer) {
+      state = AsyncValue.data(timer);
+      _startCountdown();
+    });
   }
 
   /// タイマーを一時停止
@@ -183,13 +174,10 @@ class TimerNotifier extends _$TimerNotifier {
     final useCase = ref.read(resumeTimerUseCaseProvider);
     final result = await useCase(currentTimer);
 
-    result.fold(
-      (failure) => throw Exception(failure.message),
-      (timer) {
-        state = AsyncValue.data(timer);
-        _startCountdown();
-      },
-    );
+    result.fold((failure) => throw Exception(failure.message), (timer) {
+      state = AsyncValue.data(timer);
+      _startCountdown();
+    });
   }
 
   /// タイマーをリセット
@@ -218,14 +206,11 @@ class TimerNotifier extends _$TimerNotifier {
     final useCase = ref.read(completeTimerUseCaseProvider);
     final result = await useCase(currentTimer);
 
-    result.fold(
-      (failure) => throw Exception(failure.message),
-      (timer) {
-        state = AsyncValue.data(timer);
-        // ポモドーロ数を更新
-        ref.invalidate(todayPomodoroCountProvider);
-      },
-    );
+    result.fold((failure) => throw Exception(failure.message), (timer) {
+      state = AsyncValue.data(timer);
+      // ポモドーロ数を更新
+      ref.invalidate(todayPomodoroCountProvider);
+    });
   }
 
   /// 次のタイマーに移行（ポモドーロサイクル）
@@ -235,40 +220,37 @@ class TimerNotifier extends _$TimerNotifier {
 
     final nextType = currentTimer.nextTimerType;
 
-    await createTimer(
-      type: nextType,
-      taskId: currentTimer.taskId,
-    );
+    await createTimer(type: nextType, taskId: currentTimer.taskId);
   }
 
   /// カウントダウンを開始
   void _startCountdown() {
     _timerSubscription?.cancel();
 
-    _timerSubscription = Stream.periodic(
-      const Duration(seconds: 1),
-      (count) => count,
-    ).listen((_) async {
-      final currentTimer = state.value;
-      if (currentTimer == null || !currentTimer.isRunning) {
-        _timerSubscription?.cancel();
-        return;
-      }
+    _timerSubscription =
+        Stream.periodic(const Duration(seconds: 1), (count) => count).listen((
+          _,
+        ) async {
+          final currentTimer = state.value;
+          if (currentTimer == null || !currentTimer.isRunning) {
+            _timerSubscription?.cancel();
+            return;
+          }
 
-      final newRemainingSeconds = currentTimer.remainingSeconds - 1;
+          final newRemainingSeconds = currentTimer.remainingSeconds - 1;
 
-      if (newRemainingSeconds <= 0) {
-        await complete();
-        return;
-      }
+          if (newRemainingSeconds <= 0) {
+            await complete();
+            return;
+          }
 
-      final useCase = ref.read(updateTimerUseCaseProvider);
-      final result = await useCase(currentTimer, newRemainingSeconds);
+          final useCase = ref.read(updateTimerUseCaseProvider);
+          final result = await useCase(currentTimer, newRemainingSeconds);
 
-      result.fold(
-        (failure) => throw Exception(failure.message),
-        (timer) => state = AsyncValue.data(timer),
-      );
-    });
+          result.fold(
+            (failure) => throw Exception(failure.message),
+            (timer) => state = AsyncValue.data(timer),
+          );
+        });
   }
 }
