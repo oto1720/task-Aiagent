@@ -1,4 +1,3 @@
-
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:task_aiagent/domain/entities/schedule.dart';
 import 'package:task_aiagent/domain/usecases/schedule/generate_optimal_schedule_usecase.dart';
@@ -20,8 +19,7 @@ ScheduleLocalDataSource scheduleLocalDataSource(Ref ref) {
 
 // UseCase層のプロバイダー
 @riverpod
-GenerateOptimalScheduleUseCase generateOptimalScheduleUseCase(
-    Ref ref) {
+GenerateOptimalScheduleUseCase generateOptimalScheduleUseCase(Ref ref) {
   final taskRepository = ref.watch(taskRepositoryProvider);
   return GenerateOptimalScheduleUseCase(taskRepository: taskRepository);
 }
@@ -59,16 +57,15 @@ class TodaySchedule extends _$TodaySchedule {
         breakDurationMinutes: breakDurationMinutes,
       );
 
-      result.fold(
-        (failure) => throw Exception(failure.message),
-        (schedule) async {
-          // ローカルストレージに保存
-          await dataSource.saveSchedule(schedule);
+      result.fold((failure) => throw Exception(failure.message), (
+        schedule,
+      ) async {
+        // ローカルストレージに保存
+        await dataSource.saveSchedule(schedule);
 
-          // 状態を更新
-          state = AsyncValue.data(schedule);
-        },
-      );
+        // 状態を更新
+        state = AsyncValue.data(schedule);
+      });
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
     }
@@ -133,9 +130,7 @@ List<ScheduleItem> currentScheduleItems(Ref ref) {
       if (schedule == null) return [];
 
       // 現在時刻以降のスケジュールアイテムを返す
-      return schedule.items
-          .where((item) => item.endTime.isAfter(now))
-          .toList();
+      return schedule.items.where((item) => item.endTime.isAfter(now)).toList();
     },
     loading: () => [],
     error: (error, stack) => [],
@@ -153,8 +148,9 @@ ScheduleItem? currentScheduleItem(Ref ref) {
 
       // 現在実行中のスケジュールアイテムを返す
       try {
-        return schedule.items.firstWhere((item) =>
-            item.startTime.isBefore(now) && item.endTime.isAfter(now));
+        return schedule.items.firstWhere(
+          (item) => item.startTime.isBefore(now) && item.endTime.isAfter(now),
+        );
       } catch (e) {
         return null;
       }
@@ -174,10 +170,9 @@ ScheduleItem? nextScheduleItem(Ref ref) {
       if (schedule == null) return null;
 
       // 次のスケジュールアイテムを返す
-      final futureItems = schedule.items
-          .where((item) => item.startTime.isAfter(now))
-          .toList()
-        ..sort((a, b) => a.startTime.compareTo(b.startTime));
+      final futureItems =
+          schedule.items.where((item) => item.startTime.isAfter(now)).toList()
+            ..sort((a, b) => a.startTime.compareTo(b.startTime));
 
       return futureItems.isNotEmpty ? futureItems.first : null;
     },
