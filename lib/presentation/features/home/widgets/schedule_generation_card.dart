@@ -19,7 +19,7 @@ class ScheduleGenerationCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
-          color: AppThemes.darkOrange.withValues(alpha: 0.3),
+          color: AppThemes.darkBlue.withValues(alpha: 0.3),
           width: 1.5,
         ),
       ),
@@ -30,8 +30,8 @@ class ScheduleGenerationCard extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              AppThemes.paleOrange.withValues(alpha: 0.3),
-              AppThemes.paleOrange,
+              AppThemes.paleBlue.withValues(alpha: 0.3),
+              AppThemes.paleBlue,
             ],
           ),
           borderRadius: BorderRadius.circular(12),
@@ -44,12 +44,12 @@ class ScheduleGenerationCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: AppThemes.darkOrange.withValues(alpha: 0.15),
+                    color: AppThemes.darkBlue.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(
                     Icons.auto_awesome_rounded,
-                    color: AppThemes.darkOrange,
+                    color: AppThemes.darkBlue,
                     size: 24,
                   ),
                 ),

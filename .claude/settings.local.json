@@ -1,6 +1,7 @@
 {
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
+    "githubApi",
     "github"
-  ],
-  "enableAllProjectMcpServers": true
+  ]
 }

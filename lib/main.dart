@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         title: 'TimeFlow - AIタスク管理',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.deepPurple,
+            seedColor: Colors.lightBlue,
             brightness: Brightness.light,
           ),
           useMaterial3: true,

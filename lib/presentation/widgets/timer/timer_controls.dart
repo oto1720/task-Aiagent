@@ -50,7 +50,7 @@ class TimerControls extends StatelessWidget {
           _buildControlButton(
             icon: Icons.skip_next_rounded,
             onPressed: onComplete,
-            color: AppThemes.darkOrange,
+            color: AppThemes.darkBlue,
             tooltip: '完了',
           ),
       ],
@@ -92,7 +92,7 @@ class TimerControls extends StatelessWidget {
     if (isRunning) {
       icon = Icons.pause_rounded;
       onPressed = onPause;
-      color = AppThemes.lightOrange;
+      color = AppThemes.lightBlue;
     } else if (isPaused) {
       icon = Icons.play_arrow_rounded;
       onPressed = onResume;
@@ -100,7 +100,7 @@ class TimerControls extends StatelessWidget {
     } else if (isIdle || isCompleted) {
       icon = Icons.play_arrow_rounded;
       onPressed = onStart;
-      color = AppThemes.primaryOrange;
+      color = AppThemes.primaryBlue;
     } else {
       icon = Icons.play_arrow_rounded;
       onPressed = null;

@@ -22,16 +22,16 @@ class PomodoroStats extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Colors.white, AppThemes.paleOrange],
+          colors: [Colors.white, AppThemes.paleBlue],
         ),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: AppThemes.primaryOrange.withValues(alpha: 0.3),
+          color: AppThemes.primaryBlue.withValues(alpha: 0.3),
           width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: AppThemes.primaryOrange.withValues(alpha: 0.1),
+            color: AppThemes.primaryBlue.withValues(alpha: 0.1),
             blurRadius: 10,
             spreadRadius: 2,
           ),
@@ -45,7 +45,7 @@ class PomodoroStats extends StatelessWidget {
             icon: Icons.check_circle_outline_rounded,
             label: '今日のポモドーロ',
             value: '$todayCount',
-            color: AppThemes.primaryOrange,
+            color: AppThemes.primaryBlue,
           ),
           Container(
             width: 2,
@@ -67,7 +67,7 @@ class PomodoroStats extends StatelessWidget {
             icon: Icons.refresh_rounded,
             label: '現在のサイクル',
             value: '${currentCycle % 4 + 1}/4',
-            color: AppThemes.darkOrange,
+            color: AppThemes.darkBlue,
           ),
         ],
       ),

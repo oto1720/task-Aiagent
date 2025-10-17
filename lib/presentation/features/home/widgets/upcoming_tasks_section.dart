@@ -33,12 +33,12 @@ class UpcomingTasksSection extends ConsumerWidget {
                     Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: AppThemes.primaryOrange.withValues(alpha: 0.15),
+                        color: AppThemes.primaryBlue.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: const Icon(
                         Icons.upcoming_rounded,
-                        color: AppThemes.primaryOrange,
+                        color: AppThemes.primaryBlue,
                         size: 20,
                       ),
                     ),
@@ -137,7 +137,7 @@ class UpcomingTasksSection extends ConsumerWidget {
                       onChanged: (_) => ref
                           .read(taskListProvider.notifier)
                           .completeTask(task.id),
-                      activeColor: AppThemes.primaryOrange,
+                      activeColor: AppThemes.primaryBlue,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4),
                       ),

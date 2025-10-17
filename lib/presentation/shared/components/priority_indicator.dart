@@ -51,9 +51,9 @@ class PriorityIndicator extends StatelessWidget {
       case TaskPriority.urgent:
         return AppThemes.errorColor;
       case TaskPriority.high:
-        return AppThemes.primaryOrange;
+        return AppThemes.primaryBlue;
       case TaskPriority.medium:
-        return AppThemes.lightOrange;
+        return AppThemes.lightBlue;
       case TaskPriority.low:
         return AppThemes.successColor;
     }

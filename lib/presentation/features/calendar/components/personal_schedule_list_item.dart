@@ -25,15 +25,15 @@ class PersonalScheduleListItem extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
       decoration: BoxDecoration(
-        color: AppThemes.darkOrange.withValues(alpha: 0.05),
+        color: AppThemes.darkBlue.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12.0),
         border: Border.all(
-          color: AppThemes.darkOrange.withValues(alpha: 0.3),
+          color: AppThemes.darkBlue.withValues(alpha: 0.3),
           width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: AppThemes.darkOrange.withValues(alpha: 0.05),
+            color: AppThemes.darkBlue.withValues(alpha: 0.05),
             spreadRadius: 1,
             blurRadius: 5,
             offset: const Offset(0, 2),
@@ -41,7 +41,7 @@ class PersonalScheduleListItem extends StatelessWidget {
         ],
       ),
       child: ListTile(
-        leading: const Icon(Icons.event_rounded, color: AppThemes.darkOrange),
+        leading: const Icon(Icons.event_rounded, color: AppThemes.darkBlue),
         title: Text(
           schedule.title,
           style: const TextStyle(
@@ -85,7 +85,7 @@ class PersonalScheduleListItem extends StatelessWidget {
                 children: [
                   Icon(
                     Icons.edit_outlined,
-                    color: AppThemes.primaryOrange,
+                    color: AppThemes.primaryBlue,
                     size: 18,
                   ),
                   const SizedBox(width: 8),

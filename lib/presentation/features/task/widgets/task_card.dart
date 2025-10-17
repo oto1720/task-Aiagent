@@ -89,9 +89,9 @@ class TaskCard extends StatelessWidget {
       case TaskPriority.urgent:
         return Colors.red.shade400;
       case TaskPriority.high:
-        return AppThemes.primaryOrange;
+        return AppThemes.primaryBlue;
       case TaskPriority.medium:
-        return AppThemes.lightOrange;
+        return AppThemes.lightBlue;
       case TaskPriority.low:
         return AppThemes.grey300;
     }
@@ -135,7 +135,7 @@ class TaskCard extends StatelessWidget {
             children: [
               Icon(
                 Icons.edit_outlined,
-                color: AppThemes.primaryOrange,
+                color: AppThemes.primaryBlue,
                 size: 20,
               ),
               const SizedBox(width: 12),
@@ -166,7 +166,7 @@ class TaskCard extends StatelessWidget {
         _buildMetadataChip(
           icon: Icons.schedule_outlined,
           label: formatter.formatEstimatedTime(task.estimatedMinutes),
-          color: AppThemes.primaryOrange,
+          color: AppThemes.primaryBlue,
         ),
         // 期日
         if (task.dueDate != null)
@@ -225,7 +225,7 @@ class TaskCard extends StatelessWidget {
         statusLabel = 'これから';
         break;
       case TaskStatus.inProgress:
-        statusColor = AppThemes.primaryOrange;
+        statusColor = AppThemes.primaryBlue;
         statusIcon = Icons.play_arrow;
         statusLabel = '進行中';
         break;

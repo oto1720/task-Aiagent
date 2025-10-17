@@ -36,13 +36,13 @@ class TimerDisplay extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(32),
             decoration: BoxDecoration(
-              color: AppThemes.paleOrange.withValues(alpha: 0.5),
+              color: AppThemes.paleBlue.withValues(alpha: 0.5),
               shape: BoxShape.circle,
             ),
             child: const Icon(
               Icons.timer_outlined,
               size: 80,
-              color: AppThemes.primaryOrange,
+              color: AppThemes.primaryBlue,
             ),
           ),
           const SizedBox(height: 24),
@@ -66,7 +66,7 @@ class TimerDisplay extends StatelessWidget {
     switch (timer!.type) {
       case timer_entity.TimerType.pomodoro:
         typeText = 'ポモドーロ';
-        typeColor = AppThemes.primaryOrange;
+        typeColor = AppThemes.primaryBlue;
         break;
       case timer_entity.TimerType.shortBreak:
         typeText = '短い休憩';
@@ -74,11 +74,11 @@ class TimerDisplay extends StatelessWidget {
         break;
       case timer_entity.TimerType.longBreak:
         typeText = '長い休憩';
-        typeColor = AppThemes.darkOrange;
+        typeColor = AppThemes.darkBlue;
         break;
       case timer_entity.TimerType.custom:
         typeText = 'カスタム';
-        typeColor = AppThemes.lightOrange;
+        typeColor = AppThemes.lightBlue;
         break;
     }
 
@@ -185,13 +185,13 @@ class TimerDisplay extends StatelessWidget {
   Color _getTimerColor(BuildContext context) {
     switch (timer!.type) {
       case timer_entity.TimerType.pomodoro:
-        return AppThemes.primaryOrange;
+        return AppThemes.primaryBlue;
       case timer_entity.TimerType.shortBreak:
         return AppThemes.successColor;
       case timer_entity.TimerType.longBreak:
-        return AppThemes.darkOrange;
+          return AppThemes.darkBlue;
       case timer_entity.TimerType.custom:
-        return AppThemes.lightOrange;
+        return AppThemes.lightBlue;
     }
   }
 }
