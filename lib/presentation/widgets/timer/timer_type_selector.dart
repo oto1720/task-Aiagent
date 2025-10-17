@@ -26,7 +26,7 @@ class TimerTypeSelector extends StatelessWidget {
           label: 'ポモドーロ',
           subtitle: '25分',
           icon: Icons.work_outline_rounded,
-          color: AppThemes.primaryOrange,
+          color: AppThemes.primaryBlue,
         ),
         _buildTypeButton(
           context,
@@ -42,7 +42,7 @@ class TimerTypeSelector extends StatelessWidget {
           label: '長い休憩',
           subtitle: '15分',
           icon: Icons.free_breakfast_outlined,
-          color: AppThemes.darkOrange,
+          color: AppThemes.darkBlue,
         ),
         _buildTypeButton(
           context,
@@ -50,7 +50,7 @@ class TimerTypeSelector extends StatelessWidget {
           label: 'カスタム',
           subtitle: '設定',
           icon: Icons.settings_outlined,
-          color: AppThemes.lightOrange,
+          color: AppThemes.lightBlue,
         ),
       ],
     );

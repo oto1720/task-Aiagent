@@ -24,12 +24,12 @@ class TodayScheduleSection extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: AppThemes.primaryOrange.withValues(alpha: 0.15),
+                    color: AppThemes.primaryBlue.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Icon(
                     Icons.schedule_rounded,
-                    color: AppThemes.primaryOrange,
+                    color: AppThemes.primaryBlue,
                     size: 20,
                   ),
                 ),

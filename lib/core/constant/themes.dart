@@ -4,25 +4,25 @@ import 'package:flutter/material.dart';
 ///
 /// UI/UX要件：
 /// - 背景は白ベース
-/// - アクセントカラーはオレンジ
+/// - アクセントカラーは青系統
 /// - シンプルで使いやすいデザイン
 /// - 人間工学に基づいた配色
 class AppThemes {
-  // オレンジ系のカラーパレット
-  static const Color primaryOrange = Color(0xFFFF8C42); // メインオレンジ
-  static const Color darkOrange = Color(0xFFE67A2E);    // 濃いオレンジ
-  static const Color lightOrange = Color(0xFFFFB380);   // 薄いオレンジ
-  static const Color paleOrange = Color(0xFFFFF4ED);    // 極薄オレンジ
+  // 青系のカラーパレット
+  static const Color primaryBlue = Color(0xFF42A5F5);   // メイン青（水色寄り）
+  static const Color darkBlue = Color(0xFF1E88E5);      // 濃い青
+  static const Color lightBlue = Color(0xFF80D8FF);     // 薄い水色
+  static const Color paleBlue = Color(0xFFE3F2FD);      // 極薄い青
 
   // 基本カラー
-  static const Color primaryColor = primaryOrange;
-  static const Color secondaryColor = darkOrange;
+  static const Color primaryColor = primaryBlue;
+  static const Color secondaryColor = darkBlue;
   static const Color backgroundColor = Colors.white;
   static const Color textColor = Color(0xFF333333);
   static const Color surfaceColor = Colors.white;
   static const Color cardColor = Colors.white;
   static const Color secondaryTextColor = Color(0xFF757575);
-  static const Color accentColor = primaryOrange;
+  static const Color accentColor = primaryBlue;
   static const Color errorColor = Color(0xFFE53935);
   static const Color successColor = Color(0xFF43A047);
 
@@ -48,7 +48,7 @@ class AppThemes {
       onSurface: textColor,
       onError: Colors.white,
       error: errorColor,
-      tertiary: lightOrange,
+      tertiary: lightBlue,
       surfaceContainerHighest: grey100,
     ),
 
@@ -158,7 +158,7 @@ class AppThemes {
 
     // チップスタイル
     chipTheme: ChipThemeData(
-      backgroundColor: paleOrange,
+      backgroundColor: paleBlue,
       labelStyle: const TextStyle(color: textColor),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       shape: RoundedRectangleBorder(

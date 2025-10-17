@@ -26,7 +26,7 @@ class StatsCards extends StatelessWidget {
             title: '未完了',
             value: stats['pending']?.toString() ?? '0',
             icon: Icons.pending_actions_rounded,
-            color: AppThemes.primaryOrange,
+            color: AppThemes.primaryBlue,
           ),
         ),
         const SizedBox(width: 8),

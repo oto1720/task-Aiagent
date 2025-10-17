@@ -21,7 +21,7 @@ class PersonalScheduleBlockCard extends StatelessWidget {
         color: AppThemes.grey50,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: AppThemes.darkOrange.withValues(alpha: 0.3),
+          color: AppThemes.darkBlue.withValues(alpha: 0.3),
           width: 1.5,
         ),
       ),
@@ -31,7 +31,7 @@ class PersonalScheduleBlockCard extends StatelessWidget {
             Container(
               width: 5,
               decoration: BoxDecoration(
-                color: AppThemes.darkOrange,
+                color: AppThemes.darkBlue,
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(12),
                   bottomLeft: Radius.circular(12),
@@ -62,7 +62,7 @@ class PersonalScheduleBlockCard extends StatelessWidget {
       width: 70,
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
       decoration: BoxDecoration(
-        color: AppThemes.darkOrange.withValues(alpha: 0.1),
+        color: AppThemes.darkBlue.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
@@ -73,14 +73,14 @@ class PersonalScheduleBlockCard extends StatelessWidget {
             style: const TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.bold,
-              color: AppThemes.darkOrange,
+              color: AppThemes.darkBlue,  
             ),
           ),
           const SizedBox(height: 2),
-          const Icon(
+          const Icon( 
             Icons.arrow_downward_rounded,
             size: 12,
-            color: AppThemes.darkOrange,
+            color: AppThemes.darkBlue,
           ),
           const SizedBox(height: 2),
           Text(
@@ -88,7 +88,7 @@ class PersonalScheduleBlockCard extends StatelessWidget {
             style: const TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.bold,
-              color: AppThemes.darkOrange,
+              color: AppThemes.darkBlue,
             ),
           ),
         ],
@@ -132,10 +132,10 @@ class PersonalScheduleBlockCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: AppThemes.darkOrange.withValues(alpha: 0.15),
+        color: AppThemes.darkBlue.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: AppThemes.darkOrange.withValues(alpha: 0.3),
+          color: AppThemes.darkBlue.withValues(alpha: 0.3),
           width: 1,
         ),
       ),
@@ -143,7 +143,7 @@ class PersonalScheduleBlockCard extends StatelessWidget {
         '個人',
         style: TextStyle(
           fontSize: 11,
-          color: AppThemes.darkOrange,
+          color: AppThemes.darkBlue,
           fontWeight: FontWeight.bold,
         ),
       ),

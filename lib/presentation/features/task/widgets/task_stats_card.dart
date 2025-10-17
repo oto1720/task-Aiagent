@@ -18,7 +18,7 @@ class TaskStatsCard extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Colors.white, AppThemes.paleOrange],
+            colors: [Colors.white, AppThemes.paleBlue],
           ),
           borderRadius: BorderRadius.circular(16),
         ),
@@ -36,7 +36,7 @@ class TaskStatsCard extends StatelessWidget {
               label: 'アクティブ',
               count: stats['active'] ?? 0,
               icon: Icons.trending_up_rounded,
-              color: AppThemes.primaryOrange,
+              color: AppThemes.primaryBlue,
             ),
             _buildDivider(),
             _buildStatItem(

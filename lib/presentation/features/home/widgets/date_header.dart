@@ -20,7 +20,7 @@ class DateHeader extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Colors.white, AppThemes.paleOrange],
+            colors: [Colors.white, AppThemes.paleBlue],
           ),
           borderRadius: BorderRadius.circular(12),
         ),
@@ -29,13 +29,13 @@ class DateHeader extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppThemes.primaryOrange.withValues(alpha: 0.15),
+                color: AppThemes.primaryBlue.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: const Icon(
                 Icons.today_rounded,
                 size: 32,
-                color: AppThemes.primaryOrange,
+                color: AppThemes.primaryBlue,
               ),
             ),
             const SizedBox(width: 16),
